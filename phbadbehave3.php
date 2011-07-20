@@ -24,10 +24,9 @@ Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 
 Please report any problems to badbots AT ioerror DOT us
 */
-
 ###############################################################################
 ###############################################################################
-
+error_reporting(E_ALL);
 define('BB2_CWD', dirname(__FILE__));
 
 // Settings you can adjust for Bad Behavior.
@@ -36,7 +35,7 @@ $bb2_settings_defaults = array(
 	'log_table' => $table_prefix.'bad_behavior',
 	'display_stats' => false,
 	'strict' => false,
-	'verbose' => false,
+	'verbose' => true,
 	'logging' => true,
 	'httpbl_key' => '',
 	'httpbl_threat' => '25',
@@ -53,14 +52,15 @@ function bb2_db_date() {
 
 // Return affected rows from most recent query.
 function bb2_db_affected_rows() {
-	return false;
+	global $db;
+	return $db->sql_affectedrows();
 }
 
 // Escape a string for database usage
 function bb2_db_escape($string) {
-//TODO escaping add
 	// return mysql_real_escape_string($string);
-	return $string;	// No-op when database not in use.
+	global $db;
+	return $db->sql_escape($string);	// No-op when database not in use.
 }
 
 // Return the number of rows in a particular query.
@@ -68,7 +68,8 @@ function bb2_db_num_rows($result) {
 	if ($result !== FALSE)
          {
 		global $db;
-		return $db->sql_numrows($result);
+		return -1;
+		//return $db->sql_numrows($result);
          }
 	return 0;
 }
@@ -86,12 +87,13 @@ function bb2_db_query($query) {
 // or equivalent and appending the result of each call to an array.
 function bb2_db_rows($result) {
 	global $db;
-	return $db->sql_affected_rows;
+	return $db->sql_fetchrowset($result);
 }
 
 // Return emergency contact email address.
 function bb2_email() {
-	return "example@example.com";// You need to change this.
+	global $db;
+	return bb2_read_setting('phBB_email');
 }
 
 // retrieve settings from database
@@ -99,6 +101,12 @@ function bb2_email() {
 function bb2_read_settings() {
 	global $bb2_settings_defaults;
 	return $bb2_settings_defaults;
+}
+
+function bb2_read_setting($param) {
+	global $db;
+	$db->sql_query('SELECT config_value FROM ' . CONFIG_TABLE . ' WHERE ' . $db->sql_build_array('SELECT', array('config_value', $param)));
+	return $db->sql_fetchfield('config_value');
 }
 
 // write settings to database
@@ -150,18 +158,13 @@ function bb2_insert_stats($force = false) {
 // Return the top-level relative path of wherever we are (for cookies)
 // You should provide in $url the top-level URL for your site.
 function bb2_relative_path() {
-//TODO provide the correct path
+	return bb2_read_setting('server_name');
 	//$url = parse_url(get_bloginfo('url'));
 	//return $url['path'] . '/';
-	return '/';
 }
 
-// Calls inward to Bad Behavor itself.
-$settings= bb2_read_settings();
-//bb2_install();
-require_once(BB2_CWD . "/bad-behavior/version.inc.php");
-require_once(BB2_CWD . "/bad-behavior/core.inc.php");
-	// FIXME: see above
+require_once($phpbb_root_path . "bb2.0.x/version.inc.php");
+require_once($phpbb_root_path . "bb2.0.x/core.inc.php");
 
 bb2_start(bb2_read_settings());
 
