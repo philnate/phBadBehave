@@ -47,7 +47,7 @@ $bb2_settings_defaults = array(
 
 // Return current time in the format preferred by your database.
 function bb2_db_date() {
-	return gmdate('Y-m-d H:i:s');	// Example is MySQL format
+	return date('Y-m-d H:i:s');	// Example is MySQL format
 }
 
 // Return affected rows from most recent query.
