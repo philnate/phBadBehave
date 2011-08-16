@@ -62,9 +62,13 @@
 		INDEX (`user_agent`(10)),
 		PRIMARY KEY (`id`) ); ]]></sql>
 		<copy>
-			<file from="adm/*.php" to="adm/*.php" />
-			<file from="root/phbadbehave3.php" to="root/phbadbehave3.php" />
-			<file from="bb2.0.x/*.php" to="bb2.0.x/*.php" />
+			<file from="acp/*" to="acp/*" />
+			<file from="adm/*" to="adm/*" />
+			<file from="bb2.0.x/*" to="bb2.0.x/*" />
+			<file from="includes/*" to="includes/*" />
+			<file from="install_phbadbehave3.php" to="install_phbadbehave3.php" />
+			<file from="phbadbehave3.php" to="phbadbehave3.php" />
+			<file from="language/*" to="language/*" />
 			<file from="umil/*" to="umil/*" />
 		</copy>
 
@@ -80,6 +84,9 @@
 				<action type="after-add">include_once('phbadbehave3.' . $phpEx);</action>
 			</edit>
 		</open>
+		<php-installer><![CDATA[install_phbadbehave3.php]]></php-installer>
+		<diy-instructions lang="en"><![CDATA[1. After Install finished delete install_phbadbehave3.php from root directory.
+2. Refresh templates from ACP>STYLES>TEMPLATES .]]></diy-instructions>
 	</action-group>
 </mod>
 

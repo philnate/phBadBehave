@@ -20,7 +20,15 @@ if (empty($lang) || !is_array($lang))
 
 $lang = array_merge($lang, array(
 	'ACP_PBB3_TITLE'                        	=> 'phBadBehave3',
-	'ACP_PBB3_TITLE_OVERVIEW'			=> 'Overview',
-	'ACP_PBB3_TITLE_SETTINGS'			=> 'Settings',
+	'ACP_PBB3_TITLE_SETTINGS'			=> 'phBadBehave3 - Settings',
+	'ACP_PBB3_TITLE_OVERVIEW'			=> 'phBadBehave3 - Overview',
+	'ACP_PBB3_TITLE_SEARCH'				=> 'phBadBehave3 - Search',
+	'ACP_PBB3_TITLE_LEGEND'				=> 'phBadBehave3 - Legend',
+	'ACP_PBB3_MENU'					=> 'phBadBehave3',
+	'ACP_PBB3_MENU_GENERAL'				=> 'General',
+	'ACP_PBB3_MENU_OVERVIEW'			=> 'Overview',
+	'ACP_PBB3_MENU_SETTINGS'			=> 'Settings',
+	'ACP_PBB3_MENU_SEARCH'				=> 'Search',
+	'ACP_PBB3_MENU_LEGEND'				=> 'Legend'
 ));
 ?>

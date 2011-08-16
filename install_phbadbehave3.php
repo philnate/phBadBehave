@@ -48,10 +48,22 @@ $versions = array(
 	'1.0' => array(
 		//Add module
 		'module_add' => array(
-			array('acp', 0, array(
-			'module_basename'	=> 'phbadbehave3',
-			'module_langname'	=> 'ACP_PBB3_TITLE',
-			'module_mode'		=> 'overview')),
+			array('acp', 0, 'ACP_PBB3_MENU'),
+			array('acp', 'ACP_PBB3_MENU', 'ACP_PBB3_MENU_GENERAL'),
+			array('acp', 'ACP_PBB3_MENU_GENERAL', array (
+				'module_basename'	=> 'phbadbehave3_overview',
+				'module_langname'	=> 'ACP_PBB3_MENU_OVERVIEW',
+				'module_mode'		=> 'overview')),
+			array('acp', 'ACP_PBB3_MENU_GENERAL', array (
+				'module_basename'	=> 'phbadbehave3_search',
+				'module_langname'	=> 'ACP_PBB3_MENU_SEARCH')),
+			array('acp', 'ACP_PBB3_MENU_GENERAL', array (
+				'module_basename'	=> 'phbadbehave3_settings',
+				'module_langname'	=> 'ACP_PBB3_MENU_SETTINGS')),
+			array('acp','ACP_PBB3_MENU_GENERAL', array (
+				'module_basename'	=> 'phbadbehave3_overview',
+				'module_langname'	=> 'ACP_PBB3_MENU_LEGEND',
+				'module_mode'		=> 'legend'))
 		)
 	)
 
