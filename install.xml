@@ -64,7 +64,8 @@
 		<copy>
 			<file from="adm/*.php" to="adm/*.php" />
 			<file from="root/phbadbehave3.php" to="root/phbadbehave3.php" />
-			<file from="bb2.0.x/*.php" to="bb2.0.x/*" />
+			<file from="bb2.0.x/*.php" to="bb2.0.x/*.php" />
+			<file from="umil/*" to="umil/*" />
 		</copy>
 
 		<open src="includes/constants.php">
