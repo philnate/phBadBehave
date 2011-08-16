@@ -29,6 +29,14 @@ $lang = array_merge($lang, array(
 	'ACP_PBB3_MENU_OVERVIEW'			=> 'Overview',
 	'ACP_PBB3_MENU_SETTINGS'			=> 'Settings',
 	'ACP_PBB3_MENU_SEARCH'				=> 'Search',
-	'ACP_PBB3_MENU_LEGEND'				=> 'Legend'
+	'ACP_PBB3_MENU_LEGEND'				=> 'Legend',
+	'PBB3_LEGEND_CAPTION'				=> 'Keys used within Bad Behavior',
+	'PBB3_LEGEND_KEY'				=> 'Key',
+	'PBB3_LEGEND_HTTP'				=> 'HTTP Code returned',
+	'PBB3_LEGEND_REASON'				=> 'Reason for Blocking',
+	'PBB3_200'					=> 'OK - Site delivered normally',
+	'PBB3_400'					=> 'ERROR - Request was wrong constructed',
+	'PBB3_403'					=> 'ERROR - Client is missing rights to access page',
+	'PBB3_417'					=> 'ERROR - Behavior can\'t be delivered from server',
 ));
 ?>

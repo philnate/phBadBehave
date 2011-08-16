@@ -1,5 +1,34 @@
 <!-- INCLUDE overall_header.html -->
+<style type="text/css">
+table.pbb3_legend td.ok {
+	background-color:green;
+}
+table.pbb3_legend td.error {
+	background-color:red;
+}
+table.pbb3_legend td.error, table.pbb3_legend td.ok {
+	color:#000000;
+}
+</style>
 
-Hello, World!
-You're at Overview
+<table class="pbb3_legend">
+	<caption>{L_PBB3_LEGEND_CAPTION}</caption>
+	<thead>
+		<tr>
+			<th>{L_PBB3_LEGEND_KEY}</th>
+			<th>{L_PBB3_LEGEND_HTTP}</th>
+			<th>{L_PBB3_LEGEND_REASON}</th>
+		</tr>	
+	</thead>
+	<tbody>
+		<!-- BEGIN legend_loop -->
+		<tr class="row{legend_loop.ROW}">
+			<td>{legend_loop.KEY}</td>
+			<td title="{legend_loop.HTTP_MEANING}" class="{legend_loop.CLASS}">{legend_loop.HTTP}</td>
+			<td>{legend_loop.REASON}</td>
+		<tr>
+		<!-- END legend_loop -->
+	</tbody>
+</table>
+
 <!-- INCLUDE overall_footer.html -->
