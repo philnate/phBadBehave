@@ -79,7 +79,7 @@ function bb2_db_num_rows($result) {
 // Bad Behavior will use the return value here in other callbacks.
 function bb2_db_query($query) {
 	global $db;
-	return $db->sql_query($query);
+	return $db->sql_query(preg_replace('#(?<=(\?|&))(sid|PHPSESSID)=[a-fA-F0-9]{32,32}#i', '', $query));
 }
 
 // Return all rows in a particular query.
