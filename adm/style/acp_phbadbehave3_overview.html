@@ -1,5 +1,208 @@
 <!-- INCLUDE overall_header.html -->
+<h1>{L_PBB3_OVERVIEW_STATS}</h1>
+{L_PBB3_OVERVIEW_STATS_DESC}
 
-Hello, World!
-You're at Overview
+<!-- Displaying latest blocked requests -->
+<h2>{L_PBB3_OVERVIEW_LAST_CATCHES}</h2>
+{L_PBB3_OVERVIEW_LC_DESC}
+
+<table>
+	<thead>
+		<tr>
+			<th>{L_PBB3_KEY}</th>
+			<th>{L_PBB3_IP}</th>
+			<th>{L_PBB3_DATE}</th>
+			<th>{L_PBB3_URL}</th>
+			<th>{L_PBB3_AGENT}</th>
+		</tr>
+	</thead>
+	<tbody>
+		<!-- BEGIN lc_loop -->
+		<tr class="row{lc_loop.ROW}">
+			<td>{lc_loop.KEY}</td>
+			<td>{lc_loop.IP}</td>
+			<td>{lc_loop.DATE}</td>
+			<td>{lc_loop.URL}</td>
+			<td>{lc_loop.AGENT}</td>
+		</tr>
+		<!-- END lc_loop -->
+		<!-- BEGIN lc_lucky -->
+		<tr>
+			<td colspan="5" class="success"><center>{L_PBB3_LUCKY}</center></td>
+		</tr>
+		<!-- END lc_lucky -->
+	</tbody>
+</table>
+
+<!-- Display last successful requests -->
+<h2>{L_PBB3_OVERVIEW_LAST_ACTIONS}</h2>
+{L_PBB3_OVERVIEW_LA_DESC}
+
+<table>
+	<thead>
+		<tr>
+			<th>{L_PBB3_KEY}</th>
+			<th>{L_PBB3_IP}</th>
+			<th>{L_PBB3_DATE}</th>
+			<th>{L_PBB3_URL}</th>
+			<th>{L_PBB3_AGENT}</th>
+		</tr>
+	</thead>
+	<tbody>
+		<!-- BEGIN la_loop -->
+		<tr class="row{la_loop.ROW}">
+			<td>{la_loop.KEY}</td>
+			<td>{la_loop.IP}</td>
+			<td>{la_loop.DATE}</td>
+			<td>{la_loop.URL}</td>
+			<td>{la_loop.AGENT}</td>
+		</tr>
+		<!-- END la_loop -->
+		<!-- BEGIN la_note -->
+		<tr>
+			<td colspan="5"><center>{L_PBB3_OVERVIEW_LA_NOTE}</center></td>
+		</tr>
+		<!-- END la_note -->
+	</tbody>
+</table>
+
+<!-- Display distribution of Bad Behavior Keys -->
+<h2>{L_PBB3_OVERVIEW_DISTRIBUTION}</h2>
+{L_PBB3_OVERVIEW_DI_DESC}
+
+<table>
+	<thead>
+		<tr>
+			<th>{L_PBB3_KEY}</th>
+			<th>{L_PBB3_AMOUNT}</th>
+			<th>{L_PBB3_PERCENTAGE}</th>
+			<th>{L_PBB3_LASTTIME}</th>
+		</tr>
+	</thead>
+	<tbody>
+		<!-- BEGIN di_loop -->
+		<tr class="row{di_loop.ROW}">
+			<td>{di_loop.KEY}</td>
+			<td>{di_loop.AMOUNT}</td>
+			<td>{di_loop.PERCENTAGE}</td>
+			<td>{di_loop.LAST}</td>
+		</tr>
+		<!-- END di_loop -->
+	</tbody>
+</table>
+
+<!-- Show stats about the blocking quote over the last 30 days -->
+<h2>{L_PBB3_OVERVIEW_BLOCK_DAY}</h2>
+{L_PBB3_OVERVIEW_BD_DESC}
+
+<table>
+	<thead>
+		<tr>
+			<th>{L_PBB3_DATE}</th>
+			<th>{L_PBB3_AMOUNT}</th>
+			<th>{L_PBB3_PERCENTAGE}</th>
+		</tr>
+	</thead>
+	<tbody>
+		<!-- BEGIN bd_loop -->
+		<tr class="row{bd_loop.ROW}">
+			<td>{bd_loop.DATE}</td>
+			<td>{bd_loop.AMOUNT}</td>
+			<td>{bd_loop.PERCENTAGE}</td>
+		</tr>
+		<!-- END bd_loop -->
+		<!-- BEGIN bd_lucky -->
+		<tr>
+			<td colspan="5" class="success"><center>{L_PBB3_LUCKY}</center></td>
+		</tr>
+		<!-- END bd_lucky -->
+	</tbody>
+</table>
+
+<!-- Stats about the blocking quote per hour over last 30 days -->
+<h2>{L_PBB3_OVERVIEW_BLOCK_HOUR}</h2>
+{L_PBB3_OVERVIEW_BH_DESC}
+
+<table>
+	<thead>
+		<tr>
+			<th>{L_PBB3_HOUR}</th>
+			<th>{L_PBB3_AMOUNT}</th>
+			<th>{L_PBB3_PERCENTAGE}</th>
+		</tr>
+	</thead>
+	<tbody>
+		<!-- BEGIN bh_loop -->
+		<tr class="row{bh_loop.ROW}">
+			<td>{bh_loop.HOUR}</td>
+			<td>{bh_loop.AMOUNT}</td>
+			<td>{bh_loop.PERCENTAGE}</td>
+		</tr>
+		<!-- END bh_loop -->
+		<!-- BEGIN bh_lucky -->
+		<tr>
+			<td colspan="5" class="success"><center>{L_PBB3_LUCKY}</center></td>
+		</tr>
+		<!-- END bh_lucky -->
+	</tbody>
+</table>
+
+<!-- Top blocked IPs -->
+<h2>{L_PBB3_OVERVIEW_BLOCK_IP}</h2>
+{L_PBB3_OVERVIEW_BI_DESC}
+
+<table>
+	<thead>
+		<tr>
+			<th>{L_PBB3_IP}</th>
+			<th>{L_PBB3_AMOUNT}</th>
+			<th>{L_PBB3_LASTTIME}</th>
+		</tr>
+	</thead>
+	<tbody>
+		<!-- BEGIN bi_loop -->
+		<tr class="row{bi_loop.ROW}">
+			<td>{bi_loop.IP}</td>
+			<td>{bi_loop.AMOUNT}</td>
+			<td>{bi_loop.LAST}</td>
+		</tr>
+		<!-- END bi_loop -->
+		<!-- BEGIN bi_lucky -->
+		<tr>
+			<td colspan="5" class="success"><center>{L_PBB3_LUCKY}</center></td>
+		</tr>
+		<!-- END bi_lucky -->
+	</tbody>
+</table>
+
+<!-- Most blocked site requests -->
+<h2>{L_PBB3_OVERVIEW_BLOCK_PAGE}</h2>
+{L_PBB3_OVERVIEW_BP_DESC}
+
+<table>
+	<thead>
+		<tr>
+			<th>{L_PBB3_PAGE}</th>
+			<th>{L_PBB3_AMOUNT}</th>
+			<th>{L_PBB3_LASTTIME}</th>
+		</tr>
+	</thead>
+	<tbody>
+		<!-- BEGIN bp_loop -->
+		<tr class="row{bp_loop.ROW}">
+			<td>{bp_loop.PAGE}</td>
+			<td>{bp_loop.AMOUNT}</td>
+			<td>{bp_loop.LAST}</td>
+		</tr>
+		<!-- END bp_loop -->
+		<!-- BEGIN bp_lucky -->
+		<tr>
+			<td colspan="5" class="success"><center>{L_PBB3_LUCKY}</center></td>
+		</tr>
+		<!-- END bp_lucky -->
+	</tbody>
+</table>
+
+<br /><br />
+<strong>{L_PBB3_RUNNING_WITH}: <a href="http://bad-behavior.ioerror.us">Bad Behavior {S_PBB3_VERSION}</a></strong>
 <!-- INCLUDE overall_footer.html -->

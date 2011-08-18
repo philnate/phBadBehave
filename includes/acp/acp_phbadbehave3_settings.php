@@ -10,6 +10,8 @@ class acp_phbadbehave3_settings
 	$this->page_title = 'ACP_PBB3_TITLE_SETTINGS';
 	$this->tpl_name = 'acp_phbadbehave3_settings';
 
+	//allow switching bad behavior version
+
    }
 }
 ?>
