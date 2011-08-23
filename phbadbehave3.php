@@ -32,7 +32,7 @@ define('BB2_CWD', dirname(__FILE__));
 // Settings you can adjust for Bad Behavior.
 // Most of these are unused in non-database mode.
 $bb2_settings_defaults = array(
-	'log_table' => $table_prefix.'bad_behavior',
+	'log_table' => BAD_BEHAVIOR,
 	'display_stats' => false,
 	'strict' => false,
 	'verbose' => true,
@@ -47,7 +47,7 @@ $bb2_settings_defaults = array(
 
 // Return current time in the format preferred by your database.
 function bb2_db_date() {
-	return date('Y-m-d H:i:s');	// Example is MySQL format
+	return "--TIME--";	// Example is MySQL format
 }
 
 // Return affected rows from most recent query.
@@ -79,7 +79,9 @@ function bb2_db_num_rows($result) {
 // Bad Behavior will use the return value here in other callbacks.
 function bb2_db_query($query) {
 	global $db;
-	return $db->sql_query(preg_replace('#(?<=(\?|&))(sid|PHPSESSID)=[a-fA-F0-9]{32,32}#i', '', $query));
+	$query = preg_replace('#(?<=(\?|&))(sid|PHPSESSID)=[a-fA-F0-9]{32,32}#i', '', $query);
+	$query = str_replace('\'--TIME--\'', 'NOW()', $query);
+	return $db->sql_query($query);
 }
 
 // Return all rows in a particular query.
@@ -145,14 +147,14 @@ function bb2_insert_head() {
 
 // Display stats? This is optional.
 function bb2_insert_stats($force = false) {
-	$settings = bb2_read_settings();
+/*	$settings = bb2_read_settings();
 
 	if ($force || $settings['display_stats']) {
 		$blocked = bb2_db_query("SELECT COUNT(*) FROM " . $settings['log_table'] . " WHERE `key` NOT LIKE '00000000'");
 		if ($blocked !== FALSE) {
 			echo sprintf('<p><a href="http://www.bad-behavior.ioerror.us/">%1$s</a> %2$s <strong>%3$s</strong> %4$s</p>', __('Bad Behavior'), __('has blocked'), $blocked[0]["COUNT(*)"], __('access attempts in the last 7 days.'));
 		}
-	}
+	}*/
 }
 
 // Return the top-level relative path of wherever we are (for cookies)

@@ -29,7 +29,7 @@ if (!file_exists($phpbb_root_path . 'umil/umil_auto.' . $phpEx))
 * The name of the config variable which will hold the currently installed version
 * You do not need to set this yourself, UMIL will handle setting and updating the version itself.
 */
-$version_config_name = 'phbadbehave3_version';
+$version_config_name = 'pbb3_version';
 
 $language_file = 'mods/umil_phbadbehave_install';
 
@@ -64,7 +64,43 @@ $versions = array(
 				'module_basename'	=> 'phbadbehave3_overview',
 				'module_langname'	=> 'ACP_PBB3_MENU_LEGEND',
 				'module_mode'		=> 'legend'))
-		)
+		),
+		//Property additions
+		'config_add' => array(
+			array('pbb3_logging', 'true', 0),
+			array('pbb3_verbose', 'false', 0),
+			array('pbb3_strict', 'false', 0),
+			array('pbb3_offsite', 'false', 0),
+			array('pbb3_httpbl_key', '', 0),
+			array('pbb3_httpbl_maxage', 30, 0),
+			array('pbb3_httpbl_level', 25, 0)
+		),
+
+		'table_add' => array(
+			array('phpbb_phbadbehave3', array(
+				'COLUMNS' => array(
+					'`id`' => array('INT:11', NULL, 'auto_increment'),
+					'`ip`' => array('TEXT', ''),
+					'`date`' => array('TIMESTAMP', '0000-00-00 00:00:00'),
+					'`request_method`' => array('TEXT', ''),
+					'`request_uri`' => array('TEXT', ''),
+					'`server_protocol`' => array('TEXT', ''),
+					'`http_headers`' => array('TEXT', ''),
+					'`user_agent`' => array('TEXT', ''),
+					'`request_entity`' => array('TEXT', ''),
+					'`key`' => array('TEXT', ''),
+				),
+
+				'PRIMARY_KEY'	=> 'id',
+
+				'KEYS'		=> array(
+					'pbb3_ip' => array('INDEX', array('`ip`(15)')),
+					'pbb3_useragent' => array('INDEX', array('`user_agent`(10)')),
+				),
+			)),
+
+		),
+
 	)
 
 );
