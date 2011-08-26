@@ -80,7 +80,7 @@ class acp_phbadbehave3_overview
 			{
 				$template->assign_block_vars('di_loop', array (
 					'AMOUNT'	=> $row['sum'],
-					'PERCENTAGE'	=> $row['sum'] / $total * 100 . '%',
+					'PERCENTAGE'	=> round($row['sum'] / $total * 100 . '%', 2),
 					'KEY'		=> $row['key'],
 					'LAST'		=> $row['last'],
 					'ROW'		=> ($i++) % 2 +1));
@@ -98,7 +98,7 @@ class acp_phbadbehave3_overview
 			{
 				$template->assign_block_vars('bd_loop', array (
 					'AMOUNT'	=> $row['sum'],
-					'PERCENTAGE'	=> $row['sum'] / $total * 100 . '%',
+					'PERCENTAGE'=> round($row['sum'] / $total * 100 . '%', 2),
 					'DATE'		=> $row['month']."/".$row['day'],
 					'ROW'		=> ($i++) % 2 +1));
 			}
@@ -115,7 +115,7 @@ class acp_phbadbehave3_overview
 			{
 				$template->assign_block_vars('bh_loop', array (
 					'AMOUNT'	=> $row['sum'],
-					'PERCENTAGE'	=> $row['sum'] / $total * 100 . '%',
+					'PERCENTAGE'=> round($row['sum'] / $total * 100 . '%', 2),
 					'HOUR'		=> $row['hour'],
 					'ROW'		=> ($i++) % 2 +1));
 			}
