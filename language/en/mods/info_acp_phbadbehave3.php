@@ -66,5 +66,13 @@ $lang = array_merge($lang, array(
 	'PBB3_LUCKY'					=> 'Be Lucky, within the given period no Bad Behave has been logged',
 	'PBB3_OVERVIEW_LA_NOTE'				=> 'No not blocked actions happened or verbose logging is turned off',
 	'PBB3_RUNNING_WITH'				=> 'phBadBehave3 is powered by',
+	'PBB3_LOG'						=> 'Log requests',
+	'PBB3_VERBOSE'					=> 'Verbose logging (log even successful requests). NOTE: this can cause heavy database traffic',
+	'PBB3_STRICT'					=> 'Check more strictly. Locks out some buggy software, but can lockout legit users as well!',
+	'PBB3_OFFSITE'					=> 'Allow to receive data from offsite forms like Google Cache, normally this is misused by spammers, but some apps like OpenID require this functionality',
+	'PBB3_HTTPBL_KEY'				=> 'Bad Behavior is capable to include http:BL to do further checking of incoming requests. To enable it you need an http:BL key which you can get at <a href="http://projecthoneypot.org">ProjectHoneyPot</a>',
+	'PBB3_HTTPBL_MAXAGE'			=> 'Request froms IPs with suspicious actions within this count of days or less will be blocked',
+	'PBB3_HTTPBL_LEVEL'				=> 'The ThreatLevel tells you how suspicious an IP is. Request from IPs with the given or higher ThreatLevel will be blocked through Bad Behavior',
+	'PBB3_HTTPBL'					=> 'http:BL settings (purely optional)',
 ));
 ?>

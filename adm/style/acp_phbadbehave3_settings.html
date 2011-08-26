@@ -1,5 +1,48 @@
 <!-- INCLUDE overall_header.html -->
 
-Hello, World!
+<form id="pbb3_settings" method="post" action="{U_ACTION}">
+	<table>
+		<tr class="row1">
+			<td><label for="pbb3_log" style="font-size:100%"><strong>Logging</strong><br />{L_PBB3_LOG}</label></td>
+			<td><input type="checkbox" id="pbb3_log" name="pbb3_log" value="true" {S_PBB3_LOG}></td>
+		</tr>
+		<tr class="row2">
+			<td><label for="pbb3_verbose" style="font-size:100%"><strong>Verbose</strong><br />{L_PBB3_VERBOSE}</label></td>
+			<td><input type="checkbox" id="pbb3_verbose" name="pbb3_verbose" value="true" {S_PBB3_VERBOSE}></td>
+		</tr>
+		<tr class="row1">
+			<td><label for="pbb3_strict" style="font-size:100%"><strong>Strict</strong><br />{L_PBB3_STRICT}</label></td>
+			<td><input type="checkbox" id="pbb3_strict" name="pbb3_strict" value="true" {S_PBB3_STRICT}></td>
+		</tr>
+		<tr class="row2">
+			<td><label for="pbb3_offsite" style="font-size:100%"><strong>Offsite Forms</strong><br />{L_PBB3_OFFSITE}</label></td>
+			<td><input type="checkbox" id="pbb3_offsite" name="pbb3_offsite" value="true" {S_PBB3_OFFSITE}></td>
+		</tr>
+		<tr class="row3">
+			<th colspan="2" style="text-align:center">{L_PBB3_HTTPBL}</th>
+		</tr>
+		<tr class="row1">
+			<td><label for="pbb3_httpbl_key" style="font-size:100%"><strong>http:BL Key</strong><br />{L_PBB3_HTTPBL_KEY}</label></td>
+			<td><input type="text" id="pbb3_httpbl_key" name="pbb3_httpbl_key" size="20" maxlength="12" value="{S_PBB3_HTTPBL_KEY}"></td>
+		</tr>
+		<tr class="row2">
+			<td><label for="pbb3_httpbl_maxage" style="font-size:100%"><strong>http:BL maxage</strong><br />{L_PBB3_HTTPBL_MAXAGE}</label></td>
+			<td><input type="text" id="pbb3_httpbl_maxage" name="pbb3_httpbl_maxage" size="20" maxlength="20" value="{S_PBB3_HTTPBL_MAXAGE}"></td>
+		</tr>
+		<tr class="row1">
+			<td><label for="pbb3_httpbl_level" style="font-size:100%"><strong>http:BL level</strong><br />{L_PBB3_HTTPBL_LEVEL}</label></td>
+			<td><input type="text" id="pbb3_httpbl_level" name="pbb3_httpbl_level" size="20" maxlength="20" value="{S_PBB3_HTTPBL_LEVEL}"></td>
+		</tr>
+		<tr class="row2">
+			<td colspan="2">
+				<p class="submit-buttons" style="font-size:100%">
+					<input class="button1" type="submit" id="submit" name="submit" value="{L_SUBMIT}" />&nbsp;
+					<input class="button2" type="reset" id="reset" name="reset" value="{L_RESET}" />
+				</p>
+				{S_FORM_TOKEN}
+			</td>
+		</tr>
+	</table>
+</form>
 
 <!-- INCLUDE overall_footer.html -->
