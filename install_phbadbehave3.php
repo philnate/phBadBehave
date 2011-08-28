@@ -69,7 +69,7 @@ $versions = array(
 		),
 		//Property additions
 		'config_add' => array(
-			array('pbb3_log', 'true', 0),
+			array('pbb3_logging', 'true', 0),
 			array('pbb3_verbose', 'false', 0),
 			array('pbb3_strict', 'false', 0),
 			array('pbb3_offsite', 'false', 0),

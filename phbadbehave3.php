@@ -26,12 +26,11 @@ Please report any problems to badbots AT ioerror DOT us
 */
 ###############################################################################
 ###############################################################################
-error_reporting(E_ALL);
 define('BB2_CWD', dirname(__FILE__));
 
 // Settings you can adjust for Bad Behavior.
 // Most of these are unused in non-database mode.
-$bb2_settings_defaults = array(
+/*$bb2_settings_defaults = array(
 	'log_table' => BAD_BEHAVIOR_TABLE,
 	'display_stats' => false,
 	'strict' => false,
@@ -41,7 +40,7 @@ $bb2_settings_defaults = array(
 	'httpbl_threat' => '25',
 	'httpbl_maxage' => '30',
 	'offsite_forms' => false,
-);
+);*/
 
 // Bad Behavior callback functions.
 
@@ -101,8 +100,13 @@ function bb2_email() {
 // retrieve settings from database
 // Settings are hard-coded for non-database use
 function bb2_read_settings() {
-	global $bb2_settings_defaults;
-	return $bb2_settings_defaults;
+	global $db;
+	$bb2_settings = array('log_table' => BAD_BEHAVIOR_TABLE);
+	$result = $db->sql_query('SELECT `config_name`, `config_value` FROM ' . CONFIG_TABLE . ' WHERE `config_name` LIKE \'' . $db->sql_escape('pbb3_%') . '\'');
+	while ($row = $db->sql_fetchrow($result)) {
+		$bb2_settings = array_merge($bb2_settings, array(substr($row['config_name'], 5) => $row['config_value']));
+	}
+	return $bb2_settings;
 }
 
 function bb2_read_setting($param) {

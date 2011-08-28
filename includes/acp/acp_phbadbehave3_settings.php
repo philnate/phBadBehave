@@ -13,7 +13,7 @@ class acp_phbadbehave3_settings
 		if (false !== request_var('submit', false)) {
 			//page was submitted check if all values are as expected;
 
-			set_config('pbb3_log', 	(request_var('pbb3_log', true))? 'true' : 'false');
+			set_config('pbb3_log', 	(request_var('pbb3_logging', true))? 'true' : 'false');
 			set_config('pbb3_verbose', (request_var('pbb3_verbose', false))? 'true' : 'false');
 			set_config('pbb3_strict', (request_var('pbb3_strict', false))? 'true' : 'false');
 			set_config('pbb3_offsite', (request_var('pbb3_offsite', false))? 'true' : 'false');
