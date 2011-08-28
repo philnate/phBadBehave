@@ -139,7 +139,7 @@ class acp_phbadbehave3_overview
 			}
 
 			//top 20 blocked pages
-			$result = $db->sql_query_limit('SELECT COUNT( * ) AS sum, FROM_UNIXTIME(MAX(`date`)) AS last, `request_uri` FROM ' . BAD_BEHAVIOR_TABLE . ' WHERE `key` = \'00000000\' GROUP BY `request_uri` ORDER BY sum DESC', 20);
+			$result = $db->sql_query_limit('SELECT COUNT( * ) AS sum, FROM_UNIXTIME(MAX(`date`)) AS last, `request_uri` FROM ' . BAD_BEHAVIOR_TABLE . ' WHERE `key` <> \'00000000\' GROUP BY `request_uri` ORDER BY sum DESC', 20);
 			$i = 0;
 			while ($row = $db->sql_fetchrow($result))
 			{
