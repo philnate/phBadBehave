@@ -43,6 +43,8 @@ $mod_name = 'ACP_PBB3_TITLE_LONG';
 * You must use correct version numbering.  Unless you know exactly what you can use, only use X.X.X (replacing X with an integer).
 * The version numbering must otherwise be compatible with the version_compare function - http://php.net/manual/en/function.version-compare.php
 */
+global $table_prefix;
+
 $versions = array(
 	//Version 1.0
 	'1.0' => array(
@@ -67,7 +69,7 @@ $versions = array(
 		),
 		//Property additions
 		'config_add' => array(
-			array('pbb3_logging', 'true', 0),
+			array('pbb3_log', 'true', 0),
 			array('pbb3_verbose', 'false', 0),
 			array('pbb3_strict', 'false', 0),
 			array('pbb3_offsite', 'false', 0),
@@ -77,11 +79,11 @@ $versions = array(
 		),
 
 		'table_add' => array(
-			array('phpbb_phbadbehave3', array(
+			array($table_prefix . 'phbadbehave3', array(
 				'COLUMNS' => array(
 					'`id`' => array('INT:11', NULL, 'auto_increment'),
 					'`ip`' => array('TEXT', ''),
-					'`date`' => array('TIMESTAMP', '0000-00-00 00:00:00'),
+					'`date`' => array('TIMESTAMP', NULL),
 					'`request_method`' => array('TEXT', ''),
 					'`request_uri`' => array('TEXT', ''),
 					'`server_protocol`' => array('TEXT', ''),

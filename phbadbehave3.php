@@ -80,7 +80,7 @@ function bb2_db_num_rows($result) {
 function bb2_db_query($query) {
 	global $db;
 	$query = preg_replace('#(?<=(\?|&))(sid|PHPSESSID)=[a-fA-F0-9]{32,32}#i', '', $query);
-	$query = str_replace('\'--TIME--\'', 'NOW()', $query);
+	$query = str_replace('\'--TIME--\'', 'UNIX_TIMESTAMP()', $query);
 	return $db->sql_query($query);
 }
 
