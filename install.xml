@@ -61,7 +61,7 @@
 		<open src="includes/constants.php">
 			<edit>
 				<find>define('ATTACHMENTS_TABLE',			$table_prefix . 'attachments');</find>
-				<action type="after-add">define('BAD_BEHAVIOR',				$table_prefix . 'phbadbehave3');</action>
+				<action type="after-add">define('BAD_BEHAVIOR_TABLE',		$table_prefix . 'phbadbehave3');</action>
 			</edit>
 		</open>
 		<open src="common.php">

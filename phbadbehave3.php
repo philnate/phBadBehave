@@ -32,7 +32,7 @@ define('BB2_CWD', dirname(__FILE__));
 // Settings you can adjust for Bad Behavior.
 // Most of these are unused in non-database mode.
 $bb2_settings_defaults = array(
-	'log_table' => BAD_BEHAVIOR,
+	'log_table' => BAD_BEHAVIOR_TABLE,
 	'display_stats' => false,
 	'strict' => false,
 	'verbose' => true,
