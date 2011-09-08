@@ -38,6 +38,20 @@ class acp_phbadbehave3_overview
 			$this->page_title = 'ACP_PBB3_TITLE_OVERVIEW';
 			$this->tpl_name = 'acp_phbadbehave3_overview';
 
+			//purging		
+			$form_key = 'pbb3_purge';
+			add_form_key($form_key);
+			if ('no' != request_var('purge', 'no'))
+			{
+				if (!check_form_key($form_key))
+				{
+					trigger_error($user->lang['FORM_INVALID'] . adm_back_link($this->u_action), E_USER_WARNING);
+				} else {
+					$db->sql_query('DELETE FROM ' . BAD_BEHAVIOR_TABLE . ' WHERE 1=1');
+				}
+			}
+			$template->assign_var('U_ACTION', $this->u_action);
+
 			//latest blocked requests
 			$result = $db->sql_query_limit('SELECT `ip`, FROM_UNIXTIME(`date`) AS date, `request_uri`, `user_agent`, `key` FROM ' . BAD_BEHAVIOR_TABLE . ' WHERE `key` <> \'00000000\' ORDER BY `id` DESC', 20);
 			$i = 0;

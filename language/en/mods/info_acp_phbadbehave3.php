@@ -50,6 +50,7 @@ $lang = array_merge($lang, array(
 	'PBB3_400'							=> 'ERROR - Request was wrong constructed',
 	'PBB3_403'							=> 'ERROR - Client is missing rights to access page',
 	'PBB3_417'							=> 'ERROR - Behavior can\'t be delivered from server',
+	'PBB3_OVERVIEW_PURGE'				=> 'Purge all records',
 	'PBB3_OVERVIEW_STATS'				=> 'phBadBehave3 Statistics',
 	'PBB3_OVERVIEW_STATS_DESC'			=> 'Here you can see some statistics about how Bad Behavior is doing it\'s job',
 	'PBB3_OVERVIEW_LAST_CATCHES'		=> 'Last blocked accesses',
