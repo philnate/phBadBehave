@@ -20,6 +20,8 @@ class acp_phbadbehave3_settings
 			set_config('pbb3_httpbl_maxage', (int) request_var('pbb3_httpbl_maxage', 30));
 			set_config('pbb3_httpbl_level', (int) request_var('pbb3_httpbl_level', 25));
 			set_config('pbb3_httpbl_key', preg_replace('#[^a-z]#', '', strtolower(request_var('pbb3_httpbl_key', ''))));
+			set_config('pbb3_keep_days', (int) request_var('pbb3_keep_days', 30));
+			set_config('pbb3_keep_amount', (int) request_var('pbb3_keep_amount', 4000));
 		}
 
 		$result = $db->sql_query('SELECT * FROM ' . CONFIG_TABLE . ' WHERE `config_name` LIKE \'' . $db->sql_escape('pbb3_%') . '\'');

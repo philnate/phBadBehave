@@ -75,7 +75,9 @@ $versions = array(
 			array('pbb3_offsite', 'false', 0),
 			array('pbb3_httpbl_key', '', 0),
 			array('pbb3_httpbl_maxage', 30, 0),
-			array('pbb3_httpbl_level', 25, 0)
+			array('pbb3_httpbl_level', 25, 0),
+			array('pbb3_keep_days', 30, 0),
+			array('pbb3_keep_amount', 4000, 0),
 		),
 
 		'table_add' => array(

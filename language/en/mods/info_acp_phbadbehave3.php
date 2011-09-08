@@ -77,6 +77,8 @@ $lang = array_merge($lang, array(
 	'PBB3_HTTPBL_MAXAGE'				=> 'Request froms IPs with suspicious actions within this count of days or less will be blocked',
 	'PBB3_HTTPBL_LEVEL'					=> 'The ThreatLevel tells you how suspicious an IP is. Request from IPs with the given or higher ThreatLevel will be blocked through Bad Behavior',
 	'PBB3_HTTPBL'						=> 'http:BL settings (purely optional)',
+	'PBB3_KEEP_DAYS'					=> 'Keep Log Entries only for the last x days; Enter -1 to disable this functionality',
+	'PBB3_KEEP_AMOUNT'					=> 'Only Keep the last x log entries; Enter -1 to disable this functionality',
 	'PBB3_SEARCH_NOTE'					=> 'No Entries where found, who matched your criteria',
 	'PBB3_SEARCH_IS'					=> 'Is',
 	'PBB3_SEARCH_ISNT'					=> 'Is Not',
@@ -85,6 +87,6 @@ $lang = array_merge($lang, array(
 	'PBB3_SEARCH_LIMIT'					=> 'Max Records',
 	'PBB3_SEARCH_ASC'					=> 'Ascending',
 	'PBB3_SEARCH_DESC'					=> 'Descending',
-	'PBB3_SEARCH_ORDERBY'					=> 'Order By',
+	'PBB3_SEARCH_ORDERBY'				=> 'Order By',
 ));
 ?>

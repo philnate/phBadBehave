@@ -138,6 +138,21 @@ function bb2_relative_path() {
 require_once($phpbb_root_path . "bb2.0.x/version.inc.php");
 require_once($phpbb_root_path . "bb2.0.x/core.inc.php");
 
-bb2_start(bb2_read_settings());
+$settings = bb2_read_settings(); 
+bb2_start($settings);
 
+global $db;
+if ('true' == $settings['log']) {
+	$db->sql_query('SELECT COUNT(*) AS count FROM ' . BAD_BEHAVIOR_TABLE, 0);
+	if (0 == (int)$db->sql_fetchfield('count') % 10) {
+		if (-1 != (int)$settings['keep_days']) {
+			$db->sql_query('DELETE FROM ' .BAD_BEHAVIOR_TABLE . ' WHERE `date` < UNIX_TIMESTAMP(SUBDATE(NOW(), INTERVAL ' . (int) $settings['keep_days'] .' DAY))');
+		}
+		if (-1 != (int) $settings['keep_amount']) {
+			$db->sql_query('SELECT MAX(id) AS max FROM ' . BAD_BEHAVIOR_TABLE);
+			$num = (int)$db->sql_fetchfield('max') - (int) $settings['keep_amount'];
+			$db->sql_query('DELETE FROM ' . BAD_BEHAVIOR_TABLE . ' WHERE `id` < ' . $num);
+		}
+	}
+}
 ?>
