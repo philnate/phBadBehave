@@ -28,20 +28,6 @@ Please report any problems to badbots AT ioerror DOT us
 ###############################################################################
 define('BB2_CWD', dirname(__FILE__));
 
-// Settings you can adjust for Bad Behavior.
-// Most of these are unused in non-database mode.
-/*$bb2_settings_defaults = array(
-	'log_table' => BAD_BEHAVIOR_TABLE,
-	'display_stats' => false,
-	'strict' => false,
-	'verbose' => true,
-	'logging' => true,
-	'httpbl_key' => '',
-	'httpbl_threat' => '25',
-	'httpbl_maxage' => '30',
-	'offsite_forms' => false,
-);*/
-
 // Bad Behavior callback functions.
 
 // Return current time in the format preferred by your database.
@@ -94,7 +80,7 @@ function bb2_db_rows($result) {
 // Return emergency contact email address.
 function bb2_email() {
 	global $db;
-	return bb2_read_setting('phBB_email');
+	return bb2_read_setting('phpBB_email');
 }
 
 // retrieve settings from database
@@ -120,26 +106,6 @@ function bb2_write_settings($settings) {
 	return false;
 }
 
-// installation
-/*
-function bb2_install() {
-	global $settings;
-        return bb2_db_query("CREATE TABLE IF NOT EXISTS `".$settings['log_table']."` (
-		`id` INT(11) NOT NULL auto_increment,
-		`ip` TEXT NOT NULL,
-		`date` DATETIME NOT NULL default '0000-00-00 00:00:00',
-		`request_method` TEXT NOT NULL,
-		`request_uri` TEXT NOT NULL,
-		`server_protocol` TEXT NOT NULL,
-		`http_headers` TEXT NOT NULL,
-		`user_agent` TEXT NOT NULL,
-		`request_entity` TEXT NOT NULL,
-		`key` TEXT NOT NULL,
-		INDEX (`ip`(15)),
-		INDEX (`user_agent`(10)),
-		PRIMARY KEY (`id`))");
-}
-*/
 // Screener
 // Insert this into the <head> section of your HTML through a template call
 // or whatever is appropriate. This is optional we'll fall back to cookies
