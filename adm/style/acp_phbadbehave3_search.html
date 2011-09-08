@@ -1,5 +1,73 @@
 <!-- INCLUDE overall_header.html -->
+<p>
+<form id="pbb3_search" method="post" action="{U_ACTION}">
+<select name="field" size="1">
+	<option value="ip">{L_PBB3_IP}</option>
+	<option value="date">{L_PBB3_DATE}</option>
+	<option value="request_method">{L_PBB3_METHOD}</option>
+	<option value="request_uri">{L_PBB3_URL}</option>
+	<option value="server_protocol">{L_PBB3_PROTOCOL}</option>
+	<option value="user_agent">{L_PBB3_AGENT}</option>
+	<option value="http_headers">{L_PBB3_HEADERS}</option>
+	<option value="key">{L_PBB3_KEY}</option>
+</select>
 
-Hello, World!
-You're at Overview
+<select name="where" size="1">
+	<option value="=">{L_PBB3_SEARCH_IS}</option>
+	<option value="!=">{L_PBB3_SEARCH_ISNT}</option>
+	<option value="LIKE">{L_PBB3_SEARCH_LIKE}</option>
+</select>
+
+{S_FORM_TOKEN}
+<input type="text" name="search" value="" size="10" maxlength="300" />
+
+{L_PBB3_SEARCH_ORDERBY}
+<select name="orderby" size="1">
+	<option value="date">{L_PBB3_DATE}</option>
+	<option value="ip">{L_PBB3_IP}</option>
+	<option value="request_method">{L_PBB3_METHOD}</option>
+	<option value="request_uri">{L_PBB3_URL}</option>
+	<option value="server_protocol">{L_PBB3_PROTOCOL}</option>
+	<option value="user_agent">{L_PBB3_AGENT}</option>
+	<option value="http_headers">{L_PBB3_HEADERS}</option>
+	<option value="key">{L_PBB3_KEY}</option>
+</select>
+
+<select name="order" size="1">
+	<option value="ASC">{L_PBB3_SEARCH_ASC}</option>
+	<option value="DESC">{L_PBB3_SEARCH_DESC}</option>
+</select>
+
+{L_PBB3_SEARCH_LIMIT}:<input type="text" name="limit" value="20" size="3" maxlength="3" />
+<input type="submit" name="submit" value="{L_PBB3_SEARCH}" />
+</form>
+</p>
+
+<table>
+	<thead>
+		<tr>
+			<th>{L_PBB3_KEY}</th>
+			<th>{L_PBB3_IP}</th>
+			<th>{L_PBB3_DATE}</th>
+			<th>{L_PBB3_URL}</th>
+			<th>{L_PBB3_AGENT}</th>
+		</tr>
+	</thead>
+	<tbody>
+		<!-- BEGIN sh_loop -->
+		<tr class="row{sh_loop.ROW}">
+			<td>{sh_loop.KEY}</td>
+			<td>{sh_loop.IP}</td>
+			<td>{sh_loop.DATE}</td>
+			<td>{sh_loop.URL}</td>
+			<td>{sh_loop.AGENT}</td>
+		</tr>
+		<!-- END sh_loop -->
+		<!-- BEGIN sh_none -->
+		<tr>
+			<td colspan="5"><center>{L_PBB3_SEARCH_NOTE}</center></td>
+		</tr>
+		<!-- END sh_none -->
+	</tbody>
+</table>
 <!-- INCLUDE overall_footer.html -->
