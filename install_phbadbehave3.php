@@ -83,23 +83,23 @@ $versions = array(
 		'table_add' => array(
 			array($table_prefix . 'phbadbehave3', array(
 				'COLUMNS' => array(
-					'`id`' => array('INT:11', NULL, 'auto_increment'),
-					'`ip`' => array('TEXT', ''),
-					'`date`' => array('TIMESTAMP', NULL),
-					'`request_method`' => array('TEXT', ''),
-					'`request_uri`' => array('TEXT', ''),
-					'`server_protocol`' => array('TEXT', ''),
-					'`http_headers`' => array('TEXT', ''),
-					'`user_agent`' => array('TEXT', ''),
-					'`request_entity`' => array('TEXT', ''),
-					'`key`' => array('TEXT', ''),
+					'id' => array('INT:11', NULL, 'auto_increment'),
+					'ip' => array('TEXT', ''),
+					'date' => array('TIMESTAMP', NULL),
+					'request_method' => array('TEXT', ''),
+					'request_uri' => array('TEXT', ''),
+					'server_protocol' => array('TEXT', ''),
+					'http_headers' => array('TEXT', ''),
+					'user_agent' => array('TEXT', ''),
+					'request_entity' => array('TEXT', ''),
+					'key' => array('TEXT', ''),
 				),
 
 				'PRIMARY_KEY'	=> 'id',
 
 				'KEYS'		=> array(
-					'pbb3_ip' => array('INDEX', array('`ip`(15)')),
-					'pbb3_useragent' => array('INDEX', array('`user_agent`(10)')),
+					'pbb3_ip' => array('INDEX', array('ip(15)')),
+					'pbb3_useragent' => array('INDEX', array('user_agent(10)')),
 				),
 			)),
 

@@ -23,7 +23,7 @@
 		      		</contributions-group>
 			</author>
 		</author-group>
-		<mod-version>0.1b</mod-version>
+		<mod-version>1.0.0</mod-version>
 
 		<installation>
 
@@ -34,12 +34,19 @@
 
 		<history>
 			<entry>
+				<date>2011-09-10</date>
+
+				<rev-version>1.0.0</rev-version>
+				<changelog lang="en">
+					<change>Feature Complete for first release</change>
+				</changelog>
+			</entry>
+			<entry>
 				<date>2011-06-19</date>
 
 				<rev-version>0.1 Beta</rev-version>
 				<changelog lang="en">
 					<change>Ported phBadBehave2 to phpBB3</change>
-					
 				</changelog>
 			</entry>
 		</history>

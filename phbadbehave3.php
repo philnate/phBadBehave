@@ -28,6 +28,15 @@ Please report any problems to badbots AT ioerror DOT us
 ###############################################################################
 define('BB2_CWD', dirname(__FILE__));
 
+
+/**
+* DO NOT CHANGE
+*/
+if (!defined('IN_PHPBB'))
+{
+	exit;
+}
+
 // Bad Behavior callback functions.
 
 // Return current time in the format preferred by your database.
@@ -88,7 +97,7 @@ function bb2_email() {
 function bb2_read_settings() {
 	global $db;
 	$bb2_settings = array('log_table' => BAD_BEHAVIOR_TABLE);
-	$result = $db->sql_query('SELECT `config_name`, `config_value` FROM ' . CONFIG_TABLE . ' WHERE `config_name` LIKE \'' . $db->sql_escape('pbb3_%') . '\'');
+	$result = $db->sql_query('SELECT config_name, config_value FROM ' . CONFIG_TABLE . ' WHERE config_name LIKE \'' . $db->sql_escape('pbb3_%') . '\'');
 	while ($row = $db->sql_fetchrow($result)) {
 		$bb2_settings = array_merge($bb2_settings, array(substr($row['config_name'], 5) => $row['config_value']));
 	}
@@ -111,8 +120,8 @@ function bb2_write_settings($settings) {
 // or whatever is appropriate. This is optional we'll fall back to cookies
 // if you don't use it.
 function bb2_insert_head() {
-	global $bb2_javascript;
-	echo $bb2_javascript;
+//	global $bb2_javascript;
+//	echo $bb2_javascript;
 }
 
 // Display stats? This is optional.
@@ -135,8 +144,8 @@ function bb2_relative_path() {
 	//return $url['path'] . '/';
 }
 
-require_once($phpbb_root_path . "bb2.0.x/version.inc.php");
-require_once($phpbb_root_path . "bb2.0.x/core.inc.php");
+require_once($phpbb_root_path . "bb2.0.x/version.inc." . $phpEx);
+require_once($phpbb_root_path . "bb2.0.x/core.inc." . $phpEx);
 
 $settings = bb2_read_settings(); 
 bb2_start($settings);
@@ -146,12 +155,12 @@ if ('true' == $settings['log']) {
 	$db->sql_query('SELECT COUNT(*) AS count FROM ' . BAD_BEHAVIOR_TABLE, 0);
 	if (0 == (int)$db->sql_fetchfield('count') % 10) {
 		if (-1 != (int)$settings['keep_days']) {
-			$db->sql_query('DELETE FROM ' .BAD_BEHAVIOR_TABLE . ' WHERE `date` < UNIX_TIMESTAMP(SUBDATE(NOW(), INTERVAL ' . (int) $settings['keep_days'] .' DAY))');
+			$db->sql_query('DELETE FROM ' .BAD_BEHAVIOR_TABLE . ' WHERE date < UNIX_TIMESTAMP(SUBDATE(NOW(), INTERVAL ' . (int) $settings['keep_days'] .' DAY))');
 		}
 		if (-1 != (int) $settings['keep_amount']) {
 			$db->sql_query('SELECT MAX(id) AS max FROM ' . BAD_BEHAVIOR_TABLE);
 			$num = (int)$db->sql_fetchfield('max') - (int) $settings['keep_amount'];
-			$db->sql_query('DELETE FROM ' . BAD_BEHAVIOR_TABLE . ' WHERE `id` < ' . $num);
+			$db->sql_query('DELETE FROM ' . BAD_BEHAVIOR_TABLE . ' WHERE id < ' . $num);
 		}
 	}
 }
