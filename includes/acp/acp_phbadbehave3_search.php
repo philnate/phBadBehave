@@ -26,7 +26,7 @@ class acp_phbadbehave3_search
 		$submit = request_var('submit', 'no');
 		if ('no' == $submit)
 		{
-			$result = $db->sql_query_limit('SELECT ip, FROM_UNIXTIME(date) AS date, request_uri, user_agent, key FROM ' . BAD_BEHAVIOR_TABLE . ' WHERE key <> \'00000000\' ORDER BY id DESC', 20);
+			$result = $db->sql_query_limit('SELECT t.ip, FROM_UNIXTIME(t.date) AS date, t.request_uri, t.user_agent, t.key FROM ' . BAD_BEHAVIOR_TABLE . ' AS t WHERE t.key <> \'00000000\' ORDER BY t.id DESC', 20);
 		} else {
 			if (!check_form_key($form_key)) {
 				trigger_error($user->lang['FORM_INVALID'] . adm_back_link($this->u_action), E_USER_WARNING);
@@ -45,7 +45,7 @@ class acp_phbadbehave3_search
 				{
 					trigger_error($user->lang['PBB3_SEARCH'] . adm_back_link($this->u_action), E_USER_WARNING);
 				} else {
-					$result = $db->sql_query('SELECT ip, FROM_UNIXTIME(date) AS date, request_uri, user_agent, key  FROM ' . BAD_BEHAVIOR_TABLE . ' WHERE ' . $field . $comparision . '\'' . $value . '\' ORDER BY ' . $orderby . ' ' . $order, $limit);
+					$result = $db->sql_query('SELECT t.ip, FROM_UNIXTIME(t.date) AS date, t.request_uri, t.user_agent, t.key  FROM ' . BAD_BEHAVIOR_TABLE . ' AS t WHERE ' . $field . $comparision . '\'' . $value . '\' ORDER BY ' . $orderby . ' ' . $order, $limit);
 				}
 			}
 		}
