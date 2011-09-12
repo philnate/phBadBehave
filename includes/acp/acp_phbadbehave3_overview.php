@@ -1,5 +1,16 @@
 <?php
+/**
+*
+* @package acp
+* @version $Id acp_phbadbehave3_overview.php
+* @copyright (c) 2011 philnate <phsoftware.de>
+* @license http://opensource.org/licenses/gpl-license.php GNU Public License
+*
+*/
 
+/**
+* @ignore
+*/
 /**
 * DO NOT CHANGE
 */
@@ -32,7 +43,8 @@ class acp_phbadbehave3_overview
 			global $bb2_responses;
 
 			$i = 0;
-			foreach (array_keys($bb2_responses) as $key) {
+			foreach (array_keys($bb2_responses) as $key)
+			{
 				$response =  bb2_get_response($key);
 				$template->assign_block_vars('legend_loop', array (
 					'KEY'		=> $key,
@@ -42,7 +54,7 @@ class acp_phbadbehave3_overview
 					'REASON'	=> $response['log'],
 					'ROW'		=> ($i++)%2 + 1));
 			}
-			break;
+		break;
 		case 'overview':
 			$this->page_title = 'ACP_PBB3_TITLE_OVERVIEW';
 			$this->tpl_name = 'acp_phbadbehave3_overview';
@@ -55,14 +67,21 @@ class acp_phbadbehave3_overview
 				if (!check_form_key($form_key))
 				{
 					trigger_error($user->lang['FORM_INVALID'] . adm_back_link($this->u_action), E_USER_WARNING);
-				} else {
-					$db->sql_query('DELETE FROM ' . BAD_BEHAVIOR_TABLE . ' WHERE 1=1');
+				}
+				else
+				{
+					$db->sql_query('DELETE FROM ' . BAD_BEHAVIOR_TABLE . '
+						WHERE 1=1');
 				}
 			}
 			$template->assign_var('U_ACTION', $this->u_action);
 
 			//latest blocked requests
-			$result = $db->sql_query_limit('SELECT t.ip, FROM_UNIXTIME(t.date) AS date, t.request_uri, t.user_agent, t.key FROM ' . BAD_BEHAVIOR_TABLE . ' AS t WHERE t.key <> \'00000000\' ORDER BY t.id DESC', 20);
+			$result = $db->sql_query_limit(
+				'SELECT t.ip, FROM_UNIXTIME(t.date) AS date, t.request_uri, t.user_agent, t.key 
+				FROM ' . BAD_BEHAVIOR_TABLE . ' AS t 
+				WHERE t.key <> \'00000000\' 
+				ORDER BY t.id DESC', 20);
 			$i = 0;
 			while ($row = $db->sql_fetchrow($result))
 			{
@@ -74,12 +93,17 @@ class acp_phbadbehave3_overview
 					'KEY'		=> $row['key'],
 					'ROW'		=> ($i++) % 2 +1));
 			}
-			if (0 == $i) {
+			if (0 == $i)
+			{
 				$template->assign_block_vars('lc_lucky', array());
 			}
 
 			//latest non blocked requests
-			$result = $db->sql_query_limit('SELECT t.ip, FROM_UNIXTIME(t.date) AS time, t.request_uri, t.user_agent, t.key FROM ' . BAD_BEHAVIOR_TABLE . ' AS t WHERE t.key = \'00000000\' ORDER BY t.id DESC', 20);
+			$result = $db->sql_query_limit(
+				'SELECT t.ip, FROM_UNIXTIME(t.date) AS time, t.request_uri, t.user_agent, t.key 
+				FROM ' . BAD_BEHAVIOR_TABLE . ' AS t 
+				WHERE t.key = \'00000000\' 
+				ORDER BY t.id DESC', 20);
 			$i = 0;
 			while ($row = $db->sql_fetchrow($result))
 			{
@@ -91,14 +115,21 @@ class acp_phbadbehave3_overview
 					'KEY'		=> $row['key'],
 					'ROW'		=> ($i++) % 2 +1));
 			}
-			if (0 == $i) {
+			if (0 == $i)
+			{
 				$template->assign_block_vars('la_note', array());
 			}
 
 			//distribution of keys
-			$result = $db->sql_query('SELECT COUNT(*) AS sum FROM ' . BAD_BEHAVIOR_TABLE);
+			$result = $db->sql_query(
+				'SELECT COUNT(*) AS sum 
+				FROM ' . BAD_BEHAVIOR_TABLE);
 			$total = (double)$db->sql_fetchfield('sum');
-			$result = $db->sql_query('SELECT COUNT(*) AS sum, t.key, FROM_UNIXTIME(MAX(t.date)) AS last FROM ' . BAD_BEHAVIOR_TABLE . ' AS t GROUP BY t.key ORDER BY t.date DESC');
+			$result = $db->sql_query(
+				'SELECT COUNT(*) AS sum, t.key, FROM_UNIXTIME(MAX(t.date)) AS last 
+				FROM ' . BAD_BEHAVIOR_TABLE . ' AS t 
+				GROUP BY t.key 
+				ORDER BY t.date DESC');
 			while ($row = $db->sql_fetchrow($result))
 			{
 				$template->assign_block_vars('di_loop', array (
@@ -113,9 +144,19 @@ class acp_phbadbehave3_overview
 			}
 
 			//blocking over last days
-			$result = $db->sql_query('SELECT COUNT(*) AS sum FROM ' . BAD_BEHAVIOR_TABLE . ' AS t WHERE t.date > UNIX_TIMESTAMP(SUBDATE(NOW(), INTERVAL 30 DAY)) AND t.key <> \'00000000\'');
+			$result = $db->sql_query(
+				'SELECT COUNT(*) AS sum 
+				FROM ' . BAD_BEHAVIOR_TABLE . ' AS t 
+				WHERE t.date > UNIX_TIMESTAMP(SUBDATE(NOW(), INTERVAL 30 DAY)) 
+					AND t.key <> \'00000000\'');
 			$total = (double)$db->sql_fetchfield('sum');
-			$result = $db->sql_query('SELECT COUNT(*) AS sum, DAY(FROM_UNIXTIME(t.date)) AS day, MONTH(FROM_UNIXTIME(t.date)) AS month FROM ' . BAD_BEHAVIOR_TABLE . ' AS t WHERE t.date > UNIX_TIMESTAMP(SUBDATE(NOW(), INTERVAL 30 DAY)) AND t.key <> \'00000000\' GROUP BY month, day ORDER BY t.date DESC');
+			$result = $db->sql_query(
+				'SELECT COUNT(*) AS sum, DAY(FROM_UNIXTIME(t.date)) AS day, MONTH(FROM_UNIXTIME(t.date)) AS month 
+				FROM ' . BAD_BEHAVIOR_TABLE . ' AS t 
+				WHERE t.date > UNIX_TIMESTAMP(SUBDATE(NOW(), INTERVAL 30 DAY)) 
+					AND t.key <> \'00000000\' 
+				GROUP BY month, day 
+				ORDER BY t.date DESC');
 			$i = 0;
 			while ($row = $db->sql_fetchrow($result))
 			{
@@ -125,14 +166,25 @@ class acp_phbadbehave3_overview
 					'DATE'		=> $row['month']."/".$row['day'],
 					'ROW'		=> ($i++) % 2 +1));
 			}
-			if (0 == $i) {
+			if (0 == $i)
+			{
 				$template->assign_block_vars('bd_lucky', array());
 			}
 
 			//blocking over hour
-			$result = $db->sql_query('SELECT COUNT(*) AS sum FROM ' . BAD_BEHAVIOR_TABLE . ' AS t WHERE t.date > UNIX_TIMESTAMP(NOW() - INTERVAL 30 DAY) AND t.key <> \'00000000\'');
+			$result = $db->sql_query(
+				'SELECT COUNT(*) AS sum 
+				FROM ' . BAD_BEHAVIOR_TABLE . ' AS t 
+				WHERE t.date > UNIX_TIMESTAMP(NOW() - INTERVAL 30 DAY) 
+					AND t.key <> \'00000000\'');
 			$total = (double)$db->sql_fetchfield('sum');
-			$result = $db->sql_query('SELECT COUNT(*) AS sum, HOUR(FROM_UNIXTIME(t.date)) AS hour FROM ' .BAD_BEHAVIOR_TABLE . ' AS t WHERE t.date > UNIX_TIMESTAMP(SUBDATE(NOW(), INTERVAL 30 DAY)) AND t.key <> \'00000000\' GROUP BY hour ORDER BY t.date DESC');
+			$result = $db->sql_query(
+				'SELECT COUNT(*) AS sum, HOUR(FROM_UNIXTIME(t.date)) AS hour 
+				FROM ' .BAD_BEHAVIOR_TABLE . ' AS t 
+				WHERE t.date > UNIX_TIMESTAMP(SUBDATE(NOW(), INTERVAL 30 DAY)) 
+					AND t.key <> \'00000000\' 
+				GROUP BY hour 
+				ORDER BY t.date DESC');
 			$i = 0;
 			while ($row = $db->sql_fetchrow($result))
 			{
@@ -142,12 +194,18 @@ class acp_phbadbehave3_overview
 					'HOUR'		=> $row['hour'],
 					'ROW'		=> ($i++) % 2 +1));
 			}
-			if (0 == $i) {
+			if (0 == $i)
+			{
 				$template->assign_block_vars('bh_lucky', array());
 			}
 
 			//top 20 blocked ips			
-			$result = $db->sql_query_limit('SELECT t.ip, COUNT(*) AS sum, FROM_UNIXTIME(MAX(t.date)) AS last FROM ' . BAD_BEHAVIOR_TABLE . ' AS t WHERE t.key <> \'00000000\' GROUP BY t.ip ORDER BY t.ip DESC', 20);
+			$result = $db->sql_query_limit(
+				'SELECT t.ip, COUNT(*) AS sum, FROM_UNIXTIME(MAX(t.date)) AS last 
+				FROM ' . BAD_BEHAVIOR_TABLE . ' AS t 
+				WHERE t.key <> \'00000000\' 
+				GROUP BY t.ip 
+				ORDER BY t.ip DESC', 20);
 			$i = 0;
 			while ($row = $db->sql_fetchrow($result))
 			{
@@ -157,12 +215,18 @@ class acp_phbadbehave3_overview
 					'LAST'		=> $row['last'],
 					'ROW'		=> ($i++) %  2 +1));
 			}
-			if (0 == $i) {
+			if (0 == $i)
+			{
 				$template->assign_block_vars('bi_lucky', array());
 			}
 
 			//top 20 blocked pages
-			$result = $db->sql_query_limit('SELECT COUNT( * ) AS sum, FROM_UNIXTIME(MAX(t.date)) AS last, t.request_uri FROM ' . BAD_BEHAVIOR_TABLE . ' AS t WHERE t.key <> \'00000000\' GROUP BY t.request_uri ORDER BY sum DESC', 20);
+			$result = $db->sql_query_limit(
+				'SELECT COUNT( * ) AS sum, FROM_UNIXTIME(MAX(t.date)) AS last, t.request_uri 
+				FROM ' . BAD_BEHAVIOR_TABLE . ' AS t 
+				WHERE t.key <> \'00000000\' 
+				GROUP BY t.request_uri 
+				ORDER BY sum DESC', 20);
 			$i = 0;
 			while ($row = $db->sql_fetchrow($result))
 			{
@@ -172,7 +236,8 @@ class acp_phbadbehave3_overview
 					'LAST'		=> $row['last'],
 					'ROW'		=> ($i++) %  2 +1));
 			}
-			if (0 == $i) {
+			if (0 == $i)
+			{
 				$template->assign_block_vars('bp_lucky', array());
 			}
 
@@ -180,12 +245,12 @@ class acp_phbadbehave3_overview
 			include_once($phpbb_root_path.'/bb2.0.x/version.inc.'.$phpEx);
 			$template->assign_var('S_PBB3_VERSION', BB2_VERSION);
 
-			break;
+		break;
 		default:
 			$this->page_title = 'ACP_PBB3_TITLE_OVERVIEW';
 			$this->tpl_name = 'acp_phbadbehave3_overview';
 
-			break;
+		break;
 	}
    }
 }

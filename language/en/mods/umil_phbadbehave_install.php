@@ -1,7 +1,13 @@
 <?php
 /**
-* phbadbehave3 install [english]
+*
+* phBadBehave3 install [english]
+*
+* @package language
+* @version $Id umil_phbadbehave3_install.php
+* @copyright (c) 2011 philnate <phsoftware.de>
 * @license http://opensource.org/licenses/gpl-license.php GNU Public License
+*
 */
 
 /**

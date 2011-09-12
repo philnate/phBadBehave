@@ -2,8 +2,8 @@
 /**
 *
 * @package umil
-* @version $Id install_safegt.php
-* @copyright (c) 2011 Soshen <nipponart.org>
+* @version $Id install_phbadbehave3.php
+* @copyright (c) 2011 philnate <phsoftware.de>
 * @license http://opensource.org/licenses/gpl-license.php GNU Public License
 *
 */
@@ -111,6 +111,5 @@ $versions = array(
 
 // Include the UMIF Auto file and everything else will be handled automatically.
 include($phpbb_root_path . 'umil/umil_auto.' . $phpEx);
-
 
 ?>

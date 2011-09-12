@@ -1,5 +1,16 @@
 <?php
+/**
+*
+* @package acp
+* @version $Id acp_phbadbehave3_search.php
+* @copyright (c) 2011 philnate <phsoftware.de>
+* @license http://opensource.org/licenses/gpl-license.php GNU Public License
+*
+*/
 
+/**
+* @ignore
+*/
 /**
 * DO NOT CHANGE
 */
@@ -26,11 +37,20 @@ class acp_phbadbehave3_search
 		$submit = request_var('submit', 'no');
 		if ('no' == $submit)
 		{
-			$result = $db->sql_query_limit('SELECT t.ip, FROM_UNIXTIME(t.date) AS date, t.request_uri, t.user_agent, t.key FROM ' . BAD_BEHAVIOR_TABLE . ' AS t WHERE t.key <> \'00000000\' ORDER BY t.id DESC', 20);
-		} else {
-			if (!check_form_key($form_key)) {
+			$result = $db->sql_query_limit(
+				'SELECT t.ip, FROM_UNIXTIME(t.date) AS date, t.request_uri, t.user_agent, t.key 
+				FROM ' . BAD_BEHAVIOR_TABLE . ' AS t 
+				WHERE t.key <> \'00000000\' 
+				ORDER BY t.id DESC', 20);
+		}
+		else
+		{
+			if (!check_form_key($form_key))
+			{
 				trigger_error($user->lang['FORM_INVALID'] . adm_back_link($this->u_action), E_USER_WARNING);
-			} else {
+			}
+			else
+			{
 				$value = $db->sql_escape(request_var('search', ''));
 				$field = request_var('field', '');
 				$limit = (int) request_var('limit', 20);
@@ -44,8 +64,14 @@ class acp_phbadbehave3_search
 				|| !in_array($order, array('ASC', 'DESC')))
 				{
 					trigger_error($user->lang['PBB3_SEARCH'] . adm_back_link($this->u_action), E_USER_WARNING);
-				} else {
-					$result = $db->sql_query('SELECT t.ip, FROM_UNIXTIME(t.date) AS date, t.request_uri, t.user_agent, t.key  FROM ' . BAD_BEHAVIOR_TABLE . ' AS t WHERE ' . $field . $comparision . '\'' . $value . '\' ORDER BY ' . $orderby . ' ' . $order, $limit);
+				}
+				else
+				{
+					$result = $db->sql_query(
+						'SELECT t.ip, FROM_UNIXTIME(t.date) AS date, t.request_uri, t.user_agent, t.key
+						FROM ' . BAD_BEHAVIOR_TABLE . " AS t
+						WHERE $field $comparision '$value' 
+						ORDER BY $orderby $order", $limit);
 				}
 			}
 		}
@@ -62,7 +88,8 @@ class acp_phbadbehave3_search
 				'KEY'		=> $row['key'],
 				'ROW'		=> ($i++) % 2 +1));
 		}
-		if (0 == $i) {
+		if (0 == $i)
+		{
 			$template->assign_block_vars('sh_none', array());
 		}
 		$template->assign_var('U_ACTION', $this->u_action);

@@ -1,5 +1,16 @@
 <?php
 /**
+*
+* phBadBehave3 plugin [english]
+*
+* @package language
+* @version $Id info_acp_phbadbehave3.php
+* @copyright (c) 2011 philnate <phsoftware.de>
+* @license http://opensource.org/licenses/gpl-license.php GNU Public License
+*
+*/
+
+/**
 * DO NOT CHANGE
 */
 if (!defined('IN_PHPBB'))

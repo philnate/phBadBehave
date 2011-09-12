@@ -1,5 +1,16 @@
 <?php
+/**
+*
+* @package acp
+* @version $Id acp_phbadbehave3.php
+* @copyright (c) 2011 philnate <phsoftware.de>
+* @license http://opensource.org/licenses/gpl-license.php GNU Public License
+*
+*/
 
+/**
+* @ignore
+*/
 /**
 * DO NOT CHANGE
 */

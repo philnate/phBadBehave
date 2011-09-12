@@ -1,4 +1,16 @@
 <?php
+/**
+*
+* @package phpBB
+* @version $Id phbadbehave3.php
+* @copyright (c) 2011 philnate <phsoftware.de>
+* @license http://opensource.org/licenses/gpl-license.php GNU Public License
+*
+*/
+
+/**
+* @ignore
+*/
 /*
 Bad Behavior - detects and blocks unwanted Web accesses
 Copyright (C) 2005-2006 Michael Hampton
@@ -97,8 +109,9 @@ function bb2_email() {
 function bb2_read_settings() {
 	global $db;
 	$bb2_settings = array('log_table' => BAD_BEHAVIOR_TABLE);
-	$result = $db->sql_query('SELECT config_name, config_value FROM ' . CONFIG_TABLE . ' WHERE config_name LIKE \'' . $db->sql_escape('pbb3_%') . '\'');
-	while ($row = $db->sql_fetchrow($result)) {
+	$result = $db->sql_query('SELECT config_name, config_value FROM ' . CONFIG_TABLE . " WHERE config_name LIKE '$db->sql_escape('pbb3_%')'");
+	while ($row = $db->sql_fetchrow($result))
+	{
 		$bb2_settings = array_merge($bb2_settings, array(substr($row['config_name'], 5) => $row['config_value']));
 	}
 	return $bb2_settings;
@@ -152,15 +165,28 @@ bb2_start($settings);
 
 global $db;
 if ('true' == $settings['log']) {
-	$db->sql_query('SELECT COUNT(*) AS count FROM ' . BAD_BEHAVIOR_TABLE, 0);
-	if (0 == (int)$db->sql_fetchfield('count') % 10) {
-		if (-1 != (int)$settings['keep_days']) {
-			$db->sql_query('DELETE FROM ' .BAD_BEHAVIOR_TABLE . ' WHERE date < UNIX_TIMESTAMP(SUBDATE(NOW(), INTERVAL ' . (int) $settings['keep_days'] .' DAY))');
+	$db->sql_query(
+		'SELECT COUNT(*) AS count 
+		FROM ' . BAD_BEHAVIOR_TABLE, 0);
+	if (0 == (int)$db->sql_fetchfield('count') % 10)
+	{
+		if (-1 != (int)$settings['keep_days'])
+		{
+			$db->sql_query(
+				'DELETE 
+				FROM ' .BAD_BEHAVIOR_TABLE . ' 
+				WHERE date < UNIX_TIMESTAMP(SUBDATE(NOW(), INTERVAL ' . (int) $settings['keep_days'] .' DAY))');
 		}
-		if (-1 != (int) $settings['keep_amount']) {
-			$db->sql_query('SELECT MAX(id) AS max FROM ' . BAD_BEHAVIOR_TABLE);
+		if (-1 != (int) $settings['keep_amount'])
+		{
+			$db->sql_query(
+				'SELECT MAX(id) AS max 
+				FROM ' . BAD_BEHAVIOR_TABLE);
 			$num = (int)$db->sql_fetchfield('max') - (int) $settings['keep_amount'];
-			$db->sql_query('DELETE FROM ' . BAD_BEHAVIOR_TABLE . ' WHERE id < ' . $num);
+			$db->sql_query(
+				'DELETE 
+				FROM ' . BAD_BEHAVIOR_TABLE . ' 
+				WHERE id < ' . $num);
 		}
 	}
 }
