@@ -84,7 +84,7 @@ $lang = array_merge($lang, array(
 	'PBB3_OVERVIEW_BLOCK_PAGE'			=> 'Most blocked Requests',
 	'PBB3_OVERVIEW_BP_DESC'				=> 'Overview of the most blocked page requests',
 	'PBB3_LUCKY'						=> 'Be Lucky, within the given period no Bad Behave has been logged',
-	'PBB3_OVERVIEW_LA_NOTE'				=> 'No not blocked actions happened or verbose logging is turned off',
+	'PBB3_OVERVIEW_LA_NOTE'				=> 'No blocked actions happened or verbose logging is turned off',
 	'PBB3_RUNNING_WITH'					=> 'phBadBehave3 is powered by',
 	'PBB3_LOGGING'						=> 'Log requests',
 	'PBB3_VERBOSE'						=> 'Verbose logging (log even successful requests). NOTE: this can cause heavy database traffic',
@@ -105,5 +105,14 @@ $lang = array_merge($lang, array(
 	'PBB3_SEARCH_ASC'					=> 'Ascending',
 	'PBB3_SEARCH_DESC'					=> 'Descending',
 	'PBB3_SEARCH_ORDERBY'				=> 'Order By',
+	'PBB3_TITLE_LOGGING'				=> 'Logging',
+	'PBB3_TITLE_VERBOSE'				=> 'Verbose',
+	'PBB3_TITLE_STRICT'					=> 'Strict',
+	'PBB3_TITLE_OFFSITE'				=> 'Offsite Forms',
+	'PBB3_TITLE_KEEPDAYS'				=> 'Days',
+	'PBB3_TITLE_KEEPAMOUNT'				=> 'Amount',
+	'PBB3_TITLE_HTTPBLKEY'				=> 'http:BL Key',
+	'PBB3_TITLE_HTTPBLAGE'				=> 'http:BL Max age',
+	'PBB3_TITLE_HTTPBLLEVEL'			=> 'http:BL level',
 ));
 ?>

@@ -10,7 +10,7 @@
 
 		<description lang="en">Bad Behavior for phpBB3</description>
 
-		<author-notes lang="en">Based upon Bad Behavior 2.0.44</author-notes>
+		<author-notes lang="en">Based upon Bad Behavior 2.0.45</author-notes>
 
 		<author-group>
 			<author>
@@ -34,7 +34,7 @@
 
 		<history>
 			<entry>
-				<date>2011-09-10</date>
+				<date>2011-10-04</date>
 
 				<rev-version>1.0.0</rev-version>
 				<changelog lang="en">
@@ -55,14 +55,20 @@
 
 	<action-group>
 		<copy>
-			<file from="acp/*" to="acp/*" />
-			<file from="adm/*" to="adm/*" />
-			<file from="bb2.0.x/*" to="bb2.0.x/*" />
-			<file from="includes/*" to="includes/*" />
-			<file from="install_phbadbehave3.php" to="install_phbadbehave3.php" />
-			<file from="phbadbehave3.php" to="phbadbehave3.php" />
-			<file from="language/*" to="language/*" />
-			<file from="umil/*" to="umil/*" />
+			<file from="root/adm/style/acp_phbadbehave3_legend.html" to="adm/style/acp_phbadbehave3_legend.html" />
+			<file from="root/adm/style/acp_phbadbehave3_overview.html" to="adm/style/acp_phbadbehave3_overview.html" />
+			<file from="root/adm/style/acp_phbadbehave3_search.html" to="adm/style/acp_phbadbehave3_search.html" />
+			<file from="root/adm/style/acp_phbadbehave3_settings.html" to="adm/style/acp_phbadbehave3_settings.html" />
+			<file from="root/bb2.0.x/*.*" to="bb2.0.x/*.*" />
+			<file from="root/includes/acp/acp_phbadbehave3_overview.php" to="includes/acp/acp_phbadbehave3_overview.php" />
+			<file from="root/includes/acp/acp_phbadbehave3_search.php" to="includes/acp/acp_phbadbehave3_search.php" />
+			<file from="root/includes/acp/acp_phbadbehave3_settings.php" to="includes/acp/acp_phbadbehave3_settings.php" />
+			<file from="root/includes/acp/info/acp_phbadbehave3.php" to="includes/acp/info/acp_phbadbehave3.php" />
+			<file from="root/install_phbadbehave3.php" to="install_phbadbehave3.php" />
+			<file from="root/phbadbehave3.php" to="phbadbehave3.php" />
+			<file from="root/language/en/mods/info_acp_phbadbehave3.php" to="language/en/mods/info_acp_phbadbehave3.php" />
+			<file from="root/language/en/mods/umil_phbadbehave_install.php" to="language/en/mods/umil_phbadbehave_install.php" />
+			<file from="root/umil/*.*" to="umil/*.*" />
 		</copy>
 
 		<open src="includes/constants.php">
@@ -73,7 +79,7 @@
 		</open>
 		<open src="common.php">
 			<edit>
-				<find>unset($dbpasswd);</find>
+				<find>$config = $cache->obtain_config();</find>
 				<action type="after-add">include_once('phbadbehave3.' . $phpEx);</action>
 			</edit>
 		</open>

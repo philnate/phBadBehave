@@ -21,10 +21,10 @@ if (!defined('IN_PHPBB'))
 
 class acp_phbadbehave3_search
 {
-   var $u_action;
-   var $new_config;
-   function main($id, $mode)
-   {
+	var $u_action;
+	var $new_config;
+	function main($id, $mode)
+	{	
 		global $db, $user, $auth, $template;
 		global $config, $phpbb_root_path, $phpbb_admin_path, $phpEx;
 
@@ -38,9 +38,9 @@ class acp_phbadbehave3_search
 		if ('no' == $submit)
 		{
 			$result = $db->sql_query_limit(
-				'SELECT t.ip, FROM_UNIXTIME(t.date) AS date, t.request_uri, t.user_agent, t.key 
+				'SELECT t.ip, t.date, t.request_uri, t.user_agent, t.code 
 				FROM ' . BAD_BEHAVIOR_TABLE . ' AS t 
-				WHERE t.key <> \'00000000\' 
+				WHERE t.code <> \'00000000\' 
 				ORDER BY t.id DESC', 20);
 		}
 		else
@@ -68,24 +68,24 @@ class acp_phbadbehave3_search
 				else
 				{
 					$result = $db->sql_query(
-						'SELECT t.ip, FROM_UNIXTIME(t.date) AS date, t.request_uri, t.user_agent, t.key
+						'SELECT t.ip, t.date, t.request_uri, t.user_agent, t.code
 						FROM ' . BAD_BEHAVIOR_TABLE . " AS t
 						WHERE $field $comparision '$value' 
 						ORDER BY $orderby $order", $limit);
 				}
 			}
 		}
-
+		global $config; 
 		$i = 0;
 		while ($row = $db->sql_fetchrow($result))
 		{
 			//print_r( $row);
 			$template->assign_block_vars('sh_loop', array (
 				'IP'		=> $row['ip'],
-				'DATE'		=> $row['date'],
+				'DATE'		=> date($config['default_dateformat'], strtotime($row['date'])),
 				'URL'		=> $row['request_uri'],
 				'AGENT'		=> $row['user_agent'],
-				'KEY'		=> $row['key'],
+				'KEY'		=> $row['code'],
 				'ROW'		=> ($i++) % 2 +1));
 		}
 		if (0 == $i)
@@ -93,6 +93,6 @@ class acp_phbadbehave3_search
 			$template->assign_block_vars('sh_none', array());
 		}
 		$template->assign_var('U_ACTION', $this->u_action);
-   }
+	}
 }
 ?>

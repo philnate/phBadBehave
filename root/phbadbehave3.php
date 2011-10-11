@@ -40,7 +40,6 @@ Please report any problems to badbots AT ioerror DOT us
 ###############################################################################
 define('BB2_CWD', dirname(__FILE__));
 
-
 /**
 * DO NOT CHANGE
 */
@@ -52,42 +51,44 @@ if (!defined('IN_PHPBB'))
 // Bad Behavior callback functions.
 
 // Return current time in the format preferred by your database.
-function bb2_db_date() {
-	return "--TIME--";	// Example is MySQL format
+function bb2_db_date()
+{
+	return date('Y-m-d H:i:s', time());	// Example is MySQL format
 }
 
 // Return affected rows from most recent query.
-function bb2_db_affected_rows() {
+function bb2_db_affected_rows()
+{
 	global $db;
 	return $db->sql_affectedrows();
 }
 
 // Escape a string for database usage
-function bb2_db_escape($string) {
-	// return mysql_real_escape_string($string);
+function bb2_db_escape($string)
+{
 	global $db;
 	return $db->sql_escape($string);	// No-op when database not in use.
 }
 
 // Return the number of rows in a particular query.
-function bb2_db_num_rows($result) {
-	if ($result !== FALSE)
-         {
-		global $db;
+function bb2_db_num_rows($result)
+{
+	if (false !== $result)
+    {
 		return -1;
-		//return $db->sql_numrows($result);
-         }
+    }
 	return 0;
 }
 
 // Run a query and return the results, if any.
 // Should return FALSE if an error occurred.
 // Bad Behavior will use the return value here in other callbacks.
-function bb2_db_query($query) {
+function bb2_db_query($query)
+{
 	global $db;
-	$query = preg_replace('#(?<=(\?|&))(sid|PHPSESSID)=[a-fA-F0-9]{32,32}#i', '', $query);
-	$query = str_replace('\'--TIME--\'', 'UNIX_TIMESTAMP()', $query);
-	return $db->sql_query($query);
+	$query = str_replace(array('`', 'key'), array('', 'code'), $query);
+	//remove common session id stuff, so different pages showup as same
+	return $db->sql_query(preg_replace('#(?<=(\?|&))(sid|PHPSESSID)=[a-fA-F0-9]{32,32}#i', '', $query));
 }
 
 // Return all rows in a particular query.
@@ -100,31 +101,32 @@ function bb2_db_rows($result) {
 
 // Return emergency contact email address.
 function bb2_email() {
-	global $db;
-	return bb2_read_setting('phpBB_email');
+	global $config;
+	return $config['phpBB_email'];
 }
 
 // retrieve settings from database
 // Settings are hard-coded for non-database use
-function bb2_read_settings() {
-	global $db;
-	$bb2_settings = array('log_table' => BAD_BEHAVIOR_TABLE);
-	$result = $db->sql_query('SELECT config_name, config_value FROM ' . CONFIG_TABLE . " WHERE config_name LIKE '$db->sql_escape('pbb3_%')'");
-	while ($row = $db->sql_fetchrow($result))
-	{
-		$bb2_settings = array_merge($bb2_settings, array(substr($row['config_name'], 5) => $row['config_value']));
-	}
+function bb2_read_settings()
+{
+	global $config;
+	$bb2_settings = array(
+		'log_table' => BAD_BEHAVIOR_TABLE,
+		'logging' => ('true' == $config['pbb3_logging'])? true:false,
+	  	'verbose' => ('true' == $config['pbb3_verbose'])? true:false,
+		'strict' => ('true' == $config['pbb3_strict'])? true:false,
+		'offsite' => ('true' == $config['pbb3_offsite'])? true:false,
+		'httpbl_key' => $config['pbb3_httpbl_key'],
+		'httpbl_maxage' => $config['pbb3_httpbl_maxage'],
+		'httpbl_level' => $config['pbb3_httpbl_level'],
+		'keep_days'  => $config['pbb3_keep_days'],
+		'keep_amount' => $config['pbb3_keep_amount']);
 	return $bb2_settings;
 }
 
-function bb2_read_setting($param) {
-	global $db;
-	$db->sql_query('SELECT config_value FROM ' . CONFIG_TABLE . ' WHERE ' . $db->sql_build_array('SELECT', array('config_value', $param)));
-	return $db->sql_fetchfield('config_value');
-}
-
 // write settings to database
-function bb2_write_settings($settings) {
+function bb2_write_settings($settings)
+{
 	return false;
 }
 
@@ -132,62 +134,61 @@ function bb2_write_settings($settings) {
 // Insert this into the <head> section of your HTML through a template call
 // or whatever is appropriate. This is optional we'll fall back to cookies
 // if you don't use it.
-function bb2_insert_head() {
-//	global $bb2_javascript;
-//	echo $bb2_javascript;
+function bb2_insert_head()
+{
 }
 
 // Display stats? This is optional.
-function bb2_insert_stats($force = false) {
-/*	$settings = bb2_read_settings();
-
-	if ($force || $settings['display_stats']) {
-		$blocked = bb2_db_query("SELECT COUNT(*) FROM " . $settings['log_table'] . " WHERE `key` NOT LIKE '00000000'");
-		if ($blocked !== FALSE) {
-			echo sprintf('<p><a href="http://www.bad-behavior.ioerror.us/">%1$s</a> %2$s <strong>%3$s</strong> %4$s</p>', __('Bad Behavior'), __('has blocked'), $blocked[0]["COUNT(*)"], __('access attempts in the last 7 days.'));
-		}
-	}*/
+function bb2_insert_stats($force = false)
+{
+//TODO to be done
 }
 
 // Return the top-level relative path of wherever we are (for cookies)
 // You should provide in $url the top-level URL for your site.
-function bb2_relative_path() {
-	return bb2_read_setting('server_name');
-	//$url = parse_url(get_bloginfo('url'));
-	//return $url['path'] . '/';
+function bb2_relative_path()
+{
+	global $config;
+	return $config['server_name'];
 }
 
-require_once($phpbb_root_path . "bb2.0.x/version.inc." . $phpEx);
-require_once($phpbb_root_path . "bb2.0.x/core.inc." . $phpEx);
+//If it fails the protection is done but board will not be down
+include_once($phpbb_root_path . "bb2.0.x/version.inc." . $phpEx);
+include_once($phpbb_root_path . "bb2.0.x/core.inc." . $phpEx);
 
-$settings = bb2_read_settings(); 
-bb2_start($settings);
-
-global $db;
-if ('true' == $settings['log']) {
-	$db->sql_query(
-		'SELECT COUNT(*) AS count 
-		FROM ' . BAD_BEHAVIOR_TABLE, 0);
-	if (0 == (int)$db->sql_fetchfield('count') % 10)
+global $config;
+if (isset($config['pbb3_installed']))
+{
+	$settings = bb2_read_settings(); 
+	bb2_start($settings);
+	global $db;
+	if ('true' == $settings['log'])
 	{
-		if (-1 != (int)$settings['keep_days'])
+		$db->sql_query(
+			'SELECT COUNT(id) AS count 
+			FROM ' . BAD_BEHAVIOR_TABLE, 0);
+		if (0 == (int)$db->sql_fetchfield('count') % 10)
 		{
-			$db->sql_query(
-				'DELETE 
-				FROM ' .BAD_BEHAVIOR_TABLE . ' 
-				WHERE date < UNIX_TIMESTAMP(SUBDATE(NOW(), INTERVAL ' . (int) $settings['keep_days'] .' DAY))');
-		}
-		if (-1 != (int) $settings['keep_amount'])
-		{
-			$db->sql_query(
-				'SELECT MAX(id) AS max 
-				FROM ' . BAD_BEHAVIOR_TABLE);
-			$num = (int)$db->sql_fetchfield('max') - (int) $settings['keep_amount'];
-			$db->sql_query(
-				'DELETE 
-				FROM ' . BAD_BEHAVIOR_TABLE . ' 
-				WHERE id < ' . $num);
+			if (-1 != (int)$settings['keep_days'])
+			{
+				$db->sql_query(
+					'DELETE 
+					FROM ' .BAD_BEHAVIOR_TABLE . ' 
+					WHERE date < '. (time() - (int) $settings['keep_days'] * 86400)  .' DAY))');
+			}
+			if (-1 != (int) $settings['keep_amount'])
+			{
+				$db->sql_query(
+					'SELECT MAX(id) AS max 
+					FROM ' . BAD_BEHAVIOR_TABLE);
+				$num = (int)$db->sql_fetchfield('max') - (int) $settings['keep_amount'];
+				$db->sql_query(
+					'DELETE 
+					FROM ' . BAD_BEHAVIOR_TABLE . ' 
+					WHERE id < ' . $num);
+			}
 		}
 	}
 }
 ?>
+

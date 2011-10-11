@@ -33,7 +33,7 @@ class acp_phbadbehave3_settings
 		if (false !== request_var('submit', false))
 		{
 			//page was submitted check if all values are as expected;
-			set_config('pbb3_log', 	(request_var('pbb3_logging', true))? 'true' : 'false');
+			set_config('pbb3_logging', 	(request_var('pbb3_logging', true))? 'true' : 'false');
 			set_config('pbb3_verbose', (request_var('pbb3_verbose', false))? 'true' : 'false');
 			set_config('pbb3_strict', (request_var('pbb3_strict', false))? 'true' : 'false');
 			set_config('pbb3_offsite', (request_var('pbb3_offsite', false))? 'true' : 'false');
@@ -44,14 +44,10 @@ class acp_phbadbehave3_settings
 			set_config('pbb3_keep_amount', (int) request_var('pbb3_keep_amount', 4000));
 		}
 
-		$result = $db->sql_query(
-			'SELECT * 
-			FROM ' . CONFIG_TABLE . "
-			WHERE config_name LIKE '$db->sql_escape('pbb3_%')'");
-		$rows =	$db->sql_fetchrowset($result);
-		foreach ($rows as $row)
+		$keys = array('pbb3_logging', 'pbb3_verbose', 'pbb3_strict', 'pbb3_offsite', 'pbb3_httpbl_key', 'pbb3_httpbl_maxage', 'pbb3_httpbl_level', 'bb3_keep_days', 'pbb3_keep_amount');
+		foreach ($keys as $key)
 		{
-			$template->assign_var('S_' . strtoupper($row['config_name']), ('true' == $row['config_value'])? 'checked' : $row['config_value']);
+			$template->assign_var('S_' . strtoupper($key), ('true' == $config[$key])? 'checked' : $config[$key]);
 		}
 		//TODO allow switching bad behavior version
    }

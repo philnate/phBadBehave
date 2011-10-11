@@ -69,6 +69,7 @@ $versions = array(
 		),
 		//Property additions
 		'config_add' => array(
+			array('pbb3_installed', 'true', 0),
 			array('pbb3_logging', 'true', 0),
 			array('pbb3_verbose', 'false', 0),
 			array('pbb3_strict', 'false', 0),
@@ -83,20 +84,18 @@ $versions = array(
 		'table_add' => array(
 			array($table_prefix . 'phbadbehave3', array(
 				'COLUMNS' => array(
-					'id' => array('INT:11', NULL, 'auto_increment'),
+					'id' => array('UINT', NULL, 'auto_increment'),
 					'ip' => array('TEXT', ''),
-					'date' => array('TIMESTAMP', NULL),
+					'date' => array('CHAR:19', '0000-00-00 00:00:00'),
 					'request_method' => array('TEXT', ''),
 					'request_uri' => array('TEXT', ''),
 					'server_protocol' => array('TEXT', ''),
 					'http_headers' => array('TEXT', ''),
 					'user_agent' => array('TEXT', ''),
 					'request_entity' => array('TEXT', ''),
-					'key' => array('TEXT', ''),
+					'code' => array('TEXT', ''),
 				),
-
 				'PRIMARY_KEY'	=> 'id',
-
 				'KEYS'		=> array(
 					'pbb3_ip' => array('INDEX', array('ip(15)')),
 					'pbb3_useragent' => array('INDEX', array('user_agent(10)')),
