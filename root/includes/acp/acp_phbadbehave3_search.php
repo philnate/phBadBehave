@@ -39,9 +39,9 @@ class acp_phbadbehave3_search
 		{
 			$result = $db->sql_query_limit(
 				'SELECT t.ip, t.date, t.request_uri, t.user_agent, t.code 
-				FROM ' . BAD_BEHAVIOR_TABLE . ' AS t 
-				WHERE t.code <> \'00000000\' 
-				ORDER BY t.id DESC', 20);
+				FROM ' . BAD_BEHAVIOR_TABLE . " AS t 
+				WHERE t.code <> '00000000' 
+				ORDER BY t.id DESC", 20);
 		}
 		else
 		{

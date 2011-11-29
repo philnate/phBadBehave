@@ -79,9 +79,9 @@ class acp_phbadbehave3_overview
 				//latest blocked requests
 				$result = $db->sql_query_limit(
 					'SELECT t.ip, t.date, t.request_uri, t.user_agent, t.code 
-					FROM ' . BAD_BEHAVIOR_TABLE . ' AS t 
-					WHERE t.code <> \'00000000\' 
-					ORDER BY t.id DESC', 20);
+					FROM ' . BAD_BEHAVIOR_TABLE . " AS t 
+					WHERE t.code <> '00000000' 
+					ORDER BY t.id DESC", 20);
 				$i = 0;
 				while ($row = $db->sql_fetchrow($result))
 				{
@@ -101,9 +101,9 @@ class acp_phbadbehave3_overview
 				//latest non blocked requests
 				$result = $db->sql_query_limit(
 					'SELECT t.ip, t.date, t.request_uri, t.user_agent, t.code 
-					FROM ' . BAD_BEHAVIOR_TABLE . ' AS t 
-					WHERE t.code = \'00000000\' 
-					ORDER BY t.id DESC', 20);
+					FROM ' . BAD_BEHAVIOR_TABLE . " AS t 
+					WHERE t.code = '00000000' 
+					ORDER BY t.id DESC", 20);
 				$i = 0;
 				while ($row = $db->sql_fetchrow($result))
 				{
@@ -152,11 +152,11 @@ class acp_phbadbehave3_overview
 				$total = (double)$db->sql_fetchfield('sum');
 				$result = $db->sql_query(
 					'SELECT COUNT(id) AS sum, SUBSTR(t.date, 9, 2) AS day, SUBSTR(t.date, 6, 2) AS month 
-					FROM ' . BAD_BEHAVIOR_TABLE . ' AS t 
-					WHERE t.date > \'' . date('Y-m-d H:i:s', time() - 2592000) . '\' 
-						AND t.code <> \'00000000\' 
+					FROM ' . BAD_BEHAVIOR_TABLE . " AS t 
+					WHERE t.date > '" . date('Y-m-d H:i:s', time() - 2592000) . "' 
+						AND t.code <> '00000000' 
 					GROUP BY month, day 
-					ORDER BY t.date DESC');
+					ORDER BY t.date DESC");
 				$i = 0;
 				while ($row = $db->sql_fetchrow($result))
 				{
@@ -174,17 +174,17 @@ class acp_phbadbehave3_overview
 				//blocking over hour
 				$result = $db->sql_query(
 					'SELECT COUNT(id) AS sum 
-					FROM ' . BAD_BEHAVIOR_TABLE . ' AS t 
-					WHERE t.date > \'' . date('Y-m-d H:i:s', time() - 2592000) . '\' 
-						AND t.code <> \'00000000\'');
+					FROM ' . BAD_BEHAVIOR_TABLE . " AS t 
+					WHERE t.date > '" . date('Y-m-d H:i:s', time() - 2592000) . "' 
+						AND t.code <> '00000000'");
 				$total = (double)$db->sql_fetchfield('sum');
 				$result = $db->sql_query(
 					'SELECT COUNT(id) AS sum, SUBSTR(t.date, 12, 2) AS hour 
-					FROM ' .BAD_BEHAVIOR_TABLE . ' AS t 
-					WHERE t.date > \'' . date('Y-m-d H:i:s', time() - 2592000) . '\' 
-						AND t.code <> \'00000000\' 
+					FROM ' .BAD_BEHAVIOR_TABLE . " AS t 
+					WHERE t.date > '" . date('Y-m-d H:i:s', time() - 2592000) . "' 
+						AND t.code <> '00000000' 
 					GROUP BY hour 
-					ORDER BY t.date DESC');
+					ORDER BY t.date DESC");
 				$i = 0;
 				while ($row = $db->sql_fetchrow($result))
 				{
@@ -202,10 +202,10 @@ class acp_phbadbehave3_overview
 				//top 20 blocked ips			
 				$result = $db->sql_query_limit(
 					'SELECT t.ip, COUNT(id) AS sum, MAX(t.date) AS last 
-					FROM ' . BAD_BEHAVIOR_TABLE . ' AS t 
-					WHERE t.code <> \'00000000\' 
+					FROM ' . BAD_BEHAVIOR_TABLE . " AS t 
+					WHERE t.code <> '00000000' 
 					GROUP BY t.ip 
-					ORDER BY t.ip DESC', 20);
+					ORDER BY t.ip DESC", 20);
 				$i = 0;
 				while ($row = $db->sql_fetchrow($result))
 				{
@@ -223,10 +223,10 @@ class acp_phbadbehave3_overview
 				//top 20 blocked pages
 				$result = $db->sql_query_limit(
 					'SELECT COUNT(id) AS sum, MAX(t.date) AS last, t.request_uri 
-					FROM ' . BAD_BEHAVIOR_TABLE . ' AS t 
-					WHERE t.code <> \'00000000\' 
+					FROM ' . BAD_BEHAVIOR_TABLE . " AS t 
+					WHERE t.code <> '00000000' 
 					GROUP BY t.request_uri 
-					ORDER BY sum DESC', 20);
+					ORDER BY sum DESC", 20);
 				$i = 0;
 				while ($row = $db->sql_fetchrow($result))
 				{
