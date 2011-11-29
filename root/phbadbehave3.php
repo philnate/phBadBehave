@@ -153,8 +153,11 @@ function bb2_relative_path()
 }
 
 //If it fails the protection is done but board will not be down
-include_once($phpbb_root_path . "bb2.0.x/version.inc." . $phpEx);
-include_once($phpbb_root_path . "bb2.0.x/core.inc." . $phpEx);
+if (!defined('BB2_VERSION')
+{
+	include($phpbb_root_path . "bb2.0.x/version.inc." . $phpEx);
+	include($phpbb_root_path . "bb2.0.x/core.inc." . $phpEx);
+}
 
 global $config;
 if (isset($config['pbb3_installed']))

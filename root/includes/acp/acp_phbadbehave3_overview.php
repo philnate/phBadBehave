@@ -242,7 +242,10 @@ class acp_phbadbehave3_overview
 				}
 
 				//show bad behavior version
-				include_once($phpbb_root_path.'/bb2.0.x/version.inc.'.$phpEx);
+				if (!defined('BB2_VERSION'))
+				{
+					include($phpbb_root_path . '/bb2.0.x/version.inc.' . $phpEx);
+				}
 				$template->assign_var('S_PBB3_VERSION', BB2_VERSION);
 
 			break;

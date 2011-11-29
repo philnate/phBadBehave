@@ -34,7 +34,7 @@
 
 		<history>
 			<entry>
-				<date>2011-10-04</date>
+				<date>2011-12-01</date>
 
 				<rev-version>1.0.0</rev-version>
 				<changelog lang="en">
@@ -73,14 +73,18 @@
 
 		<open src="includes/constants.php">
 			<edit>
-				<find>define('ATTACHMENTS_TABLE',			$table_prefix . 'attachments');</find>
+				<find>// Additional tables</find>
 				<action type="after-add">define('BAD_BEHAVIOR_TABLE',		$table_prefix . 'phbadbehave3');</action>
 			</edit>
 		</open>
 		<open src="common.php">
 			<edit>
 				<find>$config = $cache->obtain_config();</find>
-				<action type="after-add">include_once('phbadbehave3.' . $phpEx);</action>
+				<action type="after-add">if (!defined('BB2_CWD'))
+{
+	include('phbadbehave3.' . $phpEx);
+}
+				</action>
 			</edit>
 		</open>
 		<php-installer><![CDATA[install_phbadbehave3.php]]></php-installer>
