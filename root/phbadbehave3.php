@@ -1,40 +1,26 @@
 <?php
-/**
-*
-* @package phpBB
-* @version $Id phbadbehave3.php
-* @copyright (c) 2011 philnate <phsoftware.de>
-* @license http://opensource.org/licenses/gpl-license.php GNU Public License
-*
-*/
+/* 
+ * Based on bad-behavior-generic.php for phBadBehave3
+ */
 
-/**
-* @ignore
-*/
 /*
 Bad Behavior - detects and blocks unwanted Web accesses
-Copyright (C) 2005-2006 Michael Hampton
+Copyright (C) 2005,2006,2007,2008,2009,2010,2011,2012 Michael Hampton
 
-This program is free software; you can redistribute it and/or modify
-it under the terms of the GNU General Public License as published by
-the Free Software Foundation; either version 2 of the License, or
-(at your option) any later version.
+Bad Behavior is free software; you can redistribute it and/or modify it under
+the terms of the GNU Lesser General Public License as published by the Free
+Software Foundation; either version 3 of the License, or (at your option) any
+later version.
 
-As a special exemption, you may link this program with any of the
-programs listed below, regardless of the license terms of those
-programs, and distribute the resulting program, without including the
-source code for such programs: ExpressionEngine; Simple Machines Forum
+This program is distributed in the hope that it will be useful, but WITHOUT ANY
+WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
+PARTICULAR PURPOSE. See the GNU Lesser General Public License for more details.
 
-This program is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.
+You should have received a copy of the GNU Lesser General Public License along
+with this program. If not, see <http://www.gnu.org/licenses/>.
 
-You should have received a copy of the GNU General Public License
-along with this program; if not, write to the Free Software
-Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
-
-Please report any problems to badbots AT ioerror DOT us
+Please report any problems to bad . bots AT ioerror DOT us
+http://www.bad-behavior.ioerror.us/
 */
 ###############################################################################
 ###############################################################################
@@ -47,6 +33,26 @@ if (!defined('IN_PHPBB'))
 {
 	exit;
 }
+
+// Settings you can adjust for Bad Behavior.
+// Most of these are unused in non-database mode.
+// DO NOT EDIT HERE; instead make changes in settings.ini.
+// These settings are used when settings.ini is not present.
+$bb2_settings_defaults = array(
+	'log_table' => 'bad_behavior',
+	'display_stats' => false,
+	'strict' => false,
+	'verbose' => false,
+	'logging' => true,
+	'httpbl_key' => '',
+	'httpbl_threat' => '25',
+	'httpbl_maxage' => '30',
+	'offsite_forms' => false,
+	'eu_cookie' => false,
+	'reverse_proxy' => false,
+	'reverse_proxy_header' => 'X-Forwarded-For',
+	'reverse_proxy_addresses' => array(),
+);
 
 // Bad Behavior callback functions.
 
@@ -73,10 +79,8 @@ function bb2_db_escape($string)
 // Return the number of rows in a particular query.
 function bb2_db_num_rows($result)
 {
-	if (false !== $result)
-    {
-		return -1;
-    }
+	if ($result !== FALSE)
+		return count($result);
 	return 0;
 }
 
@@ -99,6 +103,31 @@ function bb2_db_rows($result) {
 	return $db->sql_fetchrowset($result);
 }
 
+// Create the SQL query for inserting a record in the database.
+function bb2_insert($settings, $package, $key)
+{
+	if (!$settings['logging']) return "";
+	$ip = bb2_db_escape($package['ip']);
+	$date = bb2_db_date();
+	$request_method = bb2_db_escape($package['request_method']);
+	$request_uri = bb2_db_escape($package['request_uri']);
+	$server_protocol = bb2_db_escape($package['server_protocol']);
+	$user_agent = bb2_db_escape($package['user_agent']);
+	$headers = "$request_method $request_uri $server_protocol\n";
+	foreach ($package['headers'] as $h => $v) {
+		$headers .= bb2_db_escape("$h: $v\n");
+	}
+	$request_entity = "";
+	if (!strcasecmp($request_method, "POST")) {
+		foreach ($package['request_entity'] as $h => $v) {
+			$request_entity .= bb2_db_escape("$h: $v\n");
+		}
+	}
+	return "INSERT INTO `" . bb2_db_escape($settings['log_table']) . "`
+		(`ip`, `date`, `request_method`, `request_uri`, `server_protocol`, `http_headers`, `user_agent`, `request_entity`, `key`) VALUES
+		('$ip', '$date', '$request_method', '$request_uri', '$server_protocol', '$headers', '$user_agent', '$request_entity', '$key')";
+}
+
 // Return emergency contact email address.
 function bb2_email() {
 	global $config;
@@ -110,23 +139,19 @@ function bb2_email() {
 function bb2_read_settings()
 {
 	global $config;
-	$bb2_settings = array(
-		'log_table' => BAD_BEHAVIOR_TABLE,
-		'logging' => ('true' == $config['pbb3_logging'])? true:false,
-	  	'verbose' => ('true' == $config['pbb3_verbose'])? true:false,
-		'strict' => ('true' == $config['pbb3_strict'])? true:false,
-		'offsite' => ('true' == $config['pbb3_offsite'])? true:false,
-		'httpbl_key' => $config['pbb3_httpbl_key'],
-		'httpbl_maxage' => $config['pbb3_httpbl_maxage'],
-		'httpbl_level' => $config['pbb3_httpbl_level'],
-		'keep_days'  => $config['pbb3_keep_days'],
-		'keep_amount' => $config['pbb3_keep_amount']);
-	return $bb2_settings;
+	$settings = @parse_ini_file(dirname(__FILE__) . "/settings.ini");
+	if (!$settings) $settings = array();
+	return @array_merge($bb2_settings_defaults, $settings);
 }
 
 // write settings to database
 function bb2_write_settings($settings)
 {
+	return false;
+}
+
+// installation
+function bb2_install() {
 	return false;
 }
 
@@ -155,8 +180,7 @@ function bb2_relative_path()
 //If it fails the protection is done but board will not be down
 if (!defined('BB2_VERSION'))
 {
-	include($phpbb_root_path . "bb2.0.x/version.inc." . $phpEx);
-	include($phpbb_root_path . "bb2.0.x/core.inc." . $phpEx);
+	include($phpbb_root_path . "bb2.2.x/core.inc." . $phpEx);
 }
 
 global $config;

@@ -39,7 +39,7 @@ class acp_phbadbehave3_overview
 				$this->page_title = 'ACP_PBB3_TITLE_LEGEND';
 				$this->tpl_name = 'acp_phbadbehave3_legend';
 
-				include($phpbb_root_path.'/bb2.0.x/responses.inc.'.$phpEx);
+				include($phpbb_root_path.'/bb2.2.x/responses.inc.'.$phpEx);
 				global $bb2_responses;
 
 				$i = 0;
@@ -244,7 +244,7 @@ class acp_phbadbehave3_overview
 				//show bad behavior version
 				if (!defined('BB2_VERSION'))
 				{
-					include($phpbb_root_path . '/bb2.0.x/version.inc.' . $phpEx);
+					include($phpbb_root_path . '/bb2.2.x/version.inc.' . $phpEx);
 				}
 				$template->assign_var('S_PBB3_VERSION', BB2_VERSION);
 
