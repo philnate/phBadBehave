@@ -39,15 +39,17 @@ if (!defined('IN_PHPBB'))
 // DO NOT EDIT HERE; instead make changes in settings.ini.
 // These settings are used when settings.ini is not present.
 $bb2_settings_defaults = array(
-	'log_table' => 'bad_behavior',
+	'log_table' => BAD_BEHAVIOR_TABLE,
+	'logging' => ('true' == $config['pbb3_logging'])? true:false,
+	'verbose' => ('true' == $config['pbb3_verbose'])? true:false,
+	'strict' => ('true' == $config['pbb3_strict'])? true:false,
+	'offsite_forms' => ('true' == $config['pbb3_offsite'])? true:false,
+	'httpbl_key' => $config['pbb3_httpbl_key'],
+	'httpbl_maxage' => $config['pbb3_httpbl_maxage'],
+	'httpbl_threat' => $config['pbb3_httpbl_level'],
+	'keep_days'  => $config['pbb3_keep_days'],
+	'keep_amount' => $config['pbb3_keep_amount'],
 	'display_stats' => false,
-	'strict' => false,
-	'verbose' => false,
-	'logging' => true,
-	'httpbl_key' => '',
-	'httpbl_threat' => '25',
-	'httpbl_maxage' => '30',
-	'offsite_forms' => false,
 	'eu_cookie' => false,
 	'reverse_proxy' => false,
 	'reverse_proxy_header' => 'X-Forwarded-For',
@@ -103,6 +105,27 @@ function bb2_db_rows($result) {
 	return $db->sql_fetchrowset($result);
 }
 
+// Our log table structure
+function bb2_table_structure($name)
+{
+	// It's not paranoia if they really are out to get you.
+	$name_escaped = bb2_db_escape($name);
+	return "CREATE TABLE IF NOT EXISTS `$name_escaped` (
+		`id` INT(11) NOT NULL auto_increment,
+		`ip` TEXT NOT NULL,
+		`date` DATETIME NOT NULL default '0000-00-00 00:00:00',
+		`request_method` TEXT NOT NULL,
+		`request_uri` TEXT NOT NULL,
+		`server_protocol` TEXT NOT NULL,
+		`http_headers` TEXT NOT NULL,
+		`user_agent` TEXT NOT NULL,
+		`request_entity` TEXT NOT NULL,
+		`key` TEXT NOT NULL,
+		INDEX (`ip`(15)),
+		INDEX (`user_agent`(10)),
+		PRIMARY KEY (`id`) );";	// TODO: INDEX might need tuning
+}
+
 // Create the SQL query for inserting a record in the database.
 function bb2_insert($settings, $package, $key)
 {
@@ -138,7 +161,7 @@ function bb2_email() {
 // Settings are hard-coded for non-database use
 function bb2_read_settings()
 {
-	global $config;
+	global $bb2_settings_defaults;
 	$settings = @parse_ini_file(dirname(__FILE__) . "/settings.ini");
 	if (!$settings) $settings = array();
 	return @array_merge($bb2_settings_defaults, $settings);
