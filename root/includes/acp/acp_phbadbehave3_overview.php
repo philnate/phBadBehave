@@ -184,7 +184,7 @@ class acp_phbadbehave3_overview
 					WHERE t.date > '" . date('Y-m-d H:i:s', time() - 2592000) . "' 
 						AND t.code <> '00000000' 
 					GROUP BY hour 
-					ORDER BY t.date DESC");
+					ORDER BY hour DESC");
 				$i = 0;
 				while ($row = $db->sql_fetchrow($result))
 				{
@@ -205,7 +205,7 @@ class acp_phbadbehave3_overview
 					FROM ' . BAD_BEHAVIOR_TABLE . " AS t 
 					WHERE t.code <> '00000000' 
 					GROUP BY t.ip 
-					ORDER BY t.ip DESC", 20);
+					ORDER BY sum DESC", 20);
 				$i = 0;
 				while ($row = $db->sql_fetchrow($result))
 				{
