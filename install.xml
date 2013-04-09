@@ -10,7 +10,7 @@
 
 		<description lang="en">Bad Behavior for phpBB3</description>
 
-		<author-notes lang="en">Based upon Bad Behavior 2.0.45</author-notes>
+		<author-notes lang="en">Based upon Bad Behavior 2.2.13</author-notes>
 
 		<author-group>
 			<author>
@@ -22,8 +22,15 @@
 		      		  <contributions status="current" from="2011-06-19" position="Developer"/>
 		      		</contributions-group>
 			</author>
+			<author>
+				<realname>Stanislas Dourdin</realname>
+				<username phpbbcom="no">Androc</username>
+		      		<contributions-group>
+		      		  <contributions status="current" from="2013-04-08" position="Developer"/>
+		      		</contributions-group>
+			</author>
 		</author-group>
-		<mod-version>1.0.0</mod-version>
+		<mod-version>2.0.0</mod-version>
 
 		<installation>
 
@@ -33,6 +40,14 @@
 		</installation>
 
 		<history>
+			<entry>
+				<date>2013-04-08</date>
+
+				<rev-version>2.0.0</rev-version>
+				<changelog lang="en">
+					<change>Switch to Bad Behavior 2.2.13</change>
+				</changelog>
+			</entry>
 			<entry>
 				<date>2011-12-01</date>
 
@@ -59,7 +74,7 @@
 			<file from="root/adm/style/acp_phbadbehave3_overview.html" to="adm/style/acp_phbadbehave3_overview.html" />
 			<file from="root/adm/style/acp_phbadbehave3_search.html" to="adm/style/acp_phbadbehave3_search.html" />
 			<file from="root/adm/style/acp_phbadbehave3_settings.html" to="adm/style/acp_phbadbehave3_settings.html" />
-			<file from="root/bb2.0.x/*.*" to="bb2.0.x/*.*" />
+			<file from="root/bb2.2.x/*.*" to="bb2.2.x/*.*" />
 			<file from="root/includes/acp/acp_phbadbehave3_overview.php" to="includes/acp/acp_phbadbehave3_overview.php" />
 			<file from="root/includes/acp/acp_phbadbehave3_search.php" to="includes/acp/acp_phbadbehave3_search.php" />
 			<file from="root/includes/acp/acp_phbadbehave3_settings.php" to="includes/acp/acp_phbadbehave3_settings.php" />
@@ -68,6 +83,8 @@
 			<file from="root/phbadbehave3.php" to="phbadbehave3.php" />
 			<file from="root/language/en/mods/info_acp_phbadbehave3.php" to="language/en/mods/info_acp_phbadbehave3.php" />
 			<file from="root/language/en/mods/umil_phbadbehave_install.php" to="language/en/mods/umil_phbadbehave_install.php" />
+			<file from="root/language/fr/mods/info_acp_phbadbehave3.php" to="language/fr/mods/info_acp_phbadbehave3.php" />
+			<file from="root/language/fr/mods/umil_phbadbehave_install.php" to="language/fr/mods/umil_phbadbehave_install.php" />
 			<file from="root/umil/*.*" to="umil/*.*" />
 		</copy>
 

@@ -54,24 +54,30 @@ class acp_phbadbehave3_search
 				$value = $db->sql_escape(request_var('search', ''));
 				$field = request_var('field', '');
 				$limit = (int) request_var('limit', 20);
-				$comparision = request_var('where', '=');
+				$comparison = request_var('where', '=');
 				$order = request_var('order', 'ASC');
 				$orderby = request_var('orderby', 'date');
-				$columns = array('ip', 'date', 'request_method', 'request_uri', 'server_protocol', 'user_agent', 'http_headers');
+				$columns = array('code', 'ip', 'date', 'request_method', 'request_uri', 'server_protocol', 'user_agent', 'http_headers');
 				if (!in_array($field, $columns)
 				|| !in_array($orderby, $columns)
-				|| !in_array($comparision, array('=', '!=', 'LIKE'))
+				|| !in_array($comparison, array('=', '!=', 'LIKE'))
 				|| !in_array($order, array('ASC', 'DESC')))
 				{
 					trigger_error($user->lang['PBB3_SEARCH'] . adm_back_link($this->u_action), E_USER_WARNING);
 				}
 				else
 				{
-					$result = $db->sql_query(
-						'SELECT t.ip, t.date, t.request_uri, t.user_agent, t.code
-						FROM ' . BAD_BEHAVIOR_TABLE . " AS t
-						WHERE $field $comparision '$value' 
-						ORDER BY $orderby $order", $limit);
+					$request = 'SELECT t.ip, t.date, t.request_uri, t.user_agent, t.code
+						FROM ' . BAD_BEHAVIOR_TABLE . " AS t ";
+					if ($value !== '')
+					{
+						if ($comparison == 'LIKE')
+							$value = '%'.$value.'%';
+
+						$request .= " WHERE $field $comparison '$value' ";
+					}
+					$request .= " ORDER BY $orderby $order";
+					$result = $db->sql_query($request, $limit);
 				}
 			}
 		}
